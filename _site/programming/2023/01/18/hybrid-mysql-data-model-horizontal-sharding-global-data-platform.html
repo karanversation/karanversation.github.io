@@ -242,8 +242,8 @@ While operating in data stores across multiple AWS regions — some of these did
 
 We again made use of our sharding strategy to include a global bit -
 
-```xml
-entity_id = <global_bit> &lt;&lt; B | <shard_id> &lt;&lt; A |  &lt; <sequence_id>
+```
+entity_id = <global_bit> &lt;&lt; B | <shard_id> &lt;&lt; A | <sequence_id>
 ```
 
 We also implemented SQS based propagation of db save operations that are handled in the other region by a batch processing framework.
