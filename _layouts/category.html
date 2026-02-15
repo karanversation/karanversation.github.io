@@ -112,7 +112,12 @@ layout: null
       <div class="content">
         <div class="subtext">{{ page.title }}</div>
         <ol class="post-list">
-          {% assign posts = site.categories[page.category] | default: empty | sort: "date" | reverse %}
+          {% assign posts = site.categories[page.category] %}
+          {% if posts %}
+            {% assign posts = posts | sort: "date" | reverse %}
+          {% else %}
+            {% assign posts = "" | split: "|" %}
+          {% endif %}
           {% for post in posts %}
             <li class="post-item">
               <span class="rank">{{ forloop.index }}.</span>
