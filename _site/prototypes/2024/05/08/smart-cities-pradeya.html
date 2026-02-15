@@ -18,15 +18,17 @@
       body {
         margin: 0;
         font-family: Verdana, Geneva, sans-serif;
-        background: var(--hn-bg);
+        background: #ffffff;
         color: var(--hn-text);
       }
       a { color: var(--hn-link); text-decoration: none; }
       a:visited { color: var(--hn-visited); }
+      a.recently-visited { color: var(--hn-visited); }
       .page {
         max-width: 960px;
-        margin: 0 auto;
+        margin: 8px auto;
         background: var(--hn-bg);
+        border: 1px solid #e6e6df;
       }
       .topbar {
         display: flex;
@@ -115,6 +117,19 @@
         color: var(--hn-subtext);
         margin-top: 18px;
       }
+      .footer-nav {
+        border-top: 2px solid var(--hn-orange);
+        margin-top: 16px;
+        padding: 10px 0 12px;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        text-align: center;
+      }
+      .footer-nav a {
+        color: var(--hn-text);
+        margin: 0 6px;
+      }
+      .footer-nav a:visited { color: var(--hn-text); }
     </style>
   </head>
   <body>
@@ -187,7 +202,85 @@ Adobe Campaign</p>
 
         </div>
         <a class="back-link" href="/">← Back to posts</a>
+        <div class="footer-nav">
+          <a href="mailto:karanbajaj23@gmail.com">Contact</a> |
+          <a href="https://www.linkedin.com/in/k-bajaj/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
       </div>
     </div>
+    <script>
+      (function() {
+        const VISIT_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
+        const STORAGE_KEY = 'karanversation_visits';
+        
+        // Get visited links from localStorage
+        function getVisitedLinks() {
+          try {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : {};
+          } catch (e) {
+            return {};
+          }
+        }
+        
+        // Save visited links to localStorage
+        function saveVisitedLinks(visits) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(visits));
+          } catch (e) {
+            // Ignore storage errors
+          }
+        }
+        
+        // Clean up old visits (older than 15 minutes)
+        function cleanupOldVisits(visits) {
+          const now = Date.now();
+          const cleaned = {};
+          for (const url in visits) {
+            if (now - visits[url] < VISIT_DURATION) {
+              cleaned[url] = visits[url];
+            }
+          }
+          return cleaned;
+        }
+        
+        // Mark links as recently visited
+        function markRecentVisits() {
+          const visits = cleanupOldVisits(getVisitedLinks());
+          const now = Date.now();
+          
+          document.querySelectorAll('.title a, .back-link').forEach(function(link) {
+            const url = link.href;
+            if (visits[url] && (now - visits[url] < VISIT_DURATION)) {
+              link.classList.add('recently-visited');
+              // Set timeout to remove class after remaining time
+              const remaining = VISIT_DURATION - (now - visits[url]);
+              setTimeout(function() {
+                link.classList.remove('recently-visited');
+              }, remaining);
+            }
+          });
+          
+          saveVisitedLinks(visits);
+        }
+        
+        // Track link clicks
+        function trackLinkClick(url) {
+          const visits = getVisitedLinks();
+          visits[url] = Date.now();
+          saveVisitedLinks(visits);
+        }
+        
+        // Initialize on page load
+        markRecentVisits();
+        
+        // Track clicks on post links
+        document.querySelectorAll('.title a, .back-link').forEach(function(link) {
+          link.addEventListener('click', function() {
+            trackLinkClick(this.href);
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
