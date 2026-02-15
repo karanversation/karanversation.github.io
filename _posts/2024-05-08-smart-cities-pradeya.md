@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "Smart Cities | Pradeya — An Idea for the Grassroots"
+categories: [prototypes]
 ---
 
 ## Pradeya — Platform for Automated Distribution of Unused Items

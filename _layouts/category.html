@@ -1,6 +1,5 @@
 ---
 layout: null
-title: Home
 ---
 <!doctype html>
 <html lang="en">
@@ -103,7 +102,7 @@ title: Home
     <div class="page">
       <div class="topbar">
         <a class="logo" href="{{ "/" | relative_url }}">K</a>
-        <div class="brand">KaranVersation</div>
+        <a class="brand" href="{{ "/" | relative_url }}">KaranVersation</a>
         <div class="tagline">
           <a href="{{ "/category/programming/" | relative_url }}">programming</a> |
           <a href="{{ "/category/prototypes/" | relative_url }}">prototypes</a> |
@@ -111,8 +110,10 @@ title: Home
         </div>
       </div>
       <div class="content">
+        <div class="subtext">{{ page.title }}</div>
         <ol class="post-list">
-          {% for post in site.posts %}
+          {% assign posts = site.categories[page.category] | sort: "date" | reverse %}
+          {% for post in posts %}
             <li class="post-item">
               <span class="rank">{{ forloop.index }}.</span>
               <div>
@@ -126,7 +127,9 @@ title: Home
             </li>
           {% endfor %}
         </ol>
-        <div class="footer">More posts coming soon.</div>
+        <div class="footer">
+          <a href="{{ "/" | relative_url }}">All posts</a>
+        </div>
       </div>
     </div>
   </body>
