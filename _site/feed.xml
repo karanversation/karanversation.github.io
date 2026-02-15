@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-02-15T19:32:23+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">karanversation</title><subtitle>Engineering, Programming, (wannabe) Physics and Robotics</subtitle><entry><title type="html">Smart Cities | Pradeya — An Idea for the Grassroots</title><link href="http://localhost:4000/prototypes/2024/05/08/smart-cities-pradeya.html" rel="alternate" type="text/html" title="Smart Cities | Pradeya — An Idea for the Grassroots" /><published>2024-05-08T00:00:00+05:30</published><updated>2024-05-08T00:00:00+05:30</updated><id>http://localhost:4000/prototypes/2024/05/08/smart-cities-pradeya</id><content type="html" xml:base="http://localhost:4000/prototypes/2024/05/08/smart-cities-pradeya.html"><![CDATA[<h2 id="pradeya--platform-for-automated-distribution-of-unused-items">Pradeya — Platform for Automated Distribution of Unused Items</h2>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*JBbP9rBgVF7mel7Y.jpg" alt="Pradeya" /></p>
+
+<h3 id="summary">Summary</h3>
+
+<p>With rapid urbanisation, the country is facing massive waste management challenges. Over 377 million urban people generate 62 million tonnes of municipal solid waste per annum. Alongside, per annum more than ₹1 lakh crore worth of food is wasted.</p>
+
+<p>On the other side, with population below poverty line reaching 25 per cent, and one out of three malnourished children in the world being Indian, we can efficiently employ the principle of “One man’s trash is another man’s treasure”.</p>
+
+<p>Interactive platforms can register unused items, converting the location into a collection point, which can be intelligently communicated to a needy citizen.</p>
+
+<hr />
+
+<h3 id="problem">Problem</h3>
+
+<p>Waste pickers in India represent less than 0.1% of the urban workforce, resulting in extensive waste mismanagement.</p>
+
+<p>For almost 25% of the population living below the poverty line, unused goods can be an invaluable resource. Food wastage alone costs India ₹1 lakh crore every year.</p>
+
+<hr />
+
+<h3 id="solution">Solution</h3>
+
+<p>A multi-platform (Web, App, SMS) portal where people can upload unused goods and spare food (events, restaurants, etc.).</p>
+
+<p>Using BPL and Ration card data, needy individuals can be identified. Aadhaar-linked identity can connect them to nearby collection points, with fair distribution ensured through round-robin allocation.</p>
+
+<hr />
+
+<h3 id="impact">Impact</h3>
+
+<p>Demand-driven distribution of unused items can significantly reduce waste.</p>
+
+<p>Intelligent analytics can ensure fairness and trust in distribution, feeding families and improving food security.</p>
+
+<hr />
+
+<h3 id="technology">Technology</h3>
+
+<p>Adobe Experience Manager<br />
+Adobe Analytics<br />
+Adobe Campaign</p>
+
+<hr />
+
+<h3 id="demo">Demo</h3>
+
+<p><a href="https://www.youtube.com/watch?v=apg1lYx4Mvk">https://www.youtube.com/watch?v=apg1lYx4Mvk</a></p>]]></content><author><name></name></author><category term="prototypes" /><summary type="html"><![CDATA[Pradeya — Platform for Automated Distribution of Unused Items]]></summary></entry></feed>
