@@ -3,8 +3,6 @@ layout: post
 title: "Smart Cities | Pradeya — An Idea for the Grassroots"
 ---
 
-# Smart Cities | Pradeya — An Idea for the Grassroots
-
 ## Pradeya — Platform for Automated Distribution of Unused Items
 
 ![Pradeya](https://cdn-images-1.medium.com/max/800/0*JBbP9rBgVF7mel7Y.jpg)
@@ -53,5 +51,5 @@ Adobe Campaign
 
 ### Demo
 
-https://www.youtube.com/watch?v=apg1lYx4Mvk
+[https://www.youtube.com/watch?v=apg1lYx4Mvk](https://www.youtube.com/watch?v=apg1lYx4Mvk)
 
