@@ -1,4 +1,166 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-02-15T19:53:10+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">karanversation</title><subtitle>Engineering, Programming, (wannabe) Physics and Robotics</subtitle><entry><title type="html">A Basic Flask + HAProxy + MySQL integration</title><link href="http://localhost:4000/programming/2021/03/22/flask-haproxy-mysql-integration.html" rel="alternate" type="text/html" title="A Basic Flask + HAProxy + MySQL integration" /><published>2021-03-22T00:00:00+05:30</published><updated>2021-03-22T00:00:00+05:30</updated><id>http://localhost:4000/programming/2021/03/22/flask-haproxy-mysql-integration</id><content type="html" xml:base="http://localhost:4000/programming/2021/03/22/flask-haproxy-mysql-integration.html"><![CDATA[<p><img src="https://cdn-images-1.medium.com/max/800/0*u4KUBkRkX0BHVYEd.png" alt="Architecture Diagram" /></p>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A Basic Flask + HAProxy + MySQL integration | karanversation</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+      :root {
+        --hn-orange: #ff6600;
+        --hn-bg: #f6f6ef;
+        --hn-text: #000000;
+        --hn-subtext: #828282;
+        --hn-link: #000000;
+        --hn-visited: #828282;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Verdana, Geneva, sans-serif;
+        background: #ffffff;
+        color: var(--hn-text);
+      }
+      a { color: var(--hn-link); text-decoration: none; }
+      a:visited { color: var(--hn-visited); }
+      a.recently-visited { color: var(--hn-visited); }
+      .page {
+        max-width: 960px;
+        margin: 8px auto;
+        background: var(--hn-bg);
+        border: 1px solid #e6e6df;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: var(--hn-orange);
+        font-size: clamp(11px, 1.2vw, 14px);
+      }
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.5em;
+        height: 1.5em;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 1em;
+        line-height: 1;
+        text-decoration: none;
+      }
+      .logo:visited { color: #ffffff; }
+      .brand {
+        font-weight: bold;
+        font-size: 1em;
+        color: #000000;
+      }
+      .brand:visited { color: #000000; }
+      .tagline {
+        font-size: 0.85em;
+        color: #000000;
+        opacity: 0.9;
+      }
+      .tagline a { color: #000000; }
+      .tagline a:visited { color: #000000; }
+      .content {
+        padding: 14px 12px 28px;
+      }
+      .post-title {
+        font-size: 20px;
+        margin: 0 0 6px;
+      }
+      .post-meta {
+        font-size: 11px;
+        color: var(--hn-subtext);
+        margin-bottom: 16px;
+      }
+      .post-body {
+        font-size: 13.5px;
+        line-height: 1.5;
+      }
+      .post-body h1,
+      .post-body h2,
+      .post-body h3 {
+        font-size: 16px;
+        margin: 20px 0 8px;
+      }
+      .post-body p { margin: 10px 0; }
+      .post-body ul,
+      .post-body ol { padding-left: 20px; }
+      .post-body li { margin: 4px 0; }
+      .post-body img {
+        max-width: 100%;
+        height: auto;
+      }
+      .post-body code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        background: #eeeeee;
+        padding: 1px 3px;
+      }
+      .post-body pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 14px;
+        overflow: auto;
+        border: 1px solid #1a1a1a;
+        border-radius: 4px;
+        margin: 16px 0;
+      }
+      .post-body pre code {
+        background: transparent;
+        color: #f8f8f2;
+        padding: 0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .post-body hr {
+        border: none;
+        border-top: 1px solid #e1e1da;
+        margin: 16px 0;
+      }
+      .back-link {
+        display: inline-block;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        margin-top: 18px;
+      }
+      .footer-nav {
+        border-top: 2px solid var(--hn-orange);
+        margin-top: 16px;
+        padding: 10px 0 12px;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        text-align: center;
+      }
+      .footer-nav a {
+        color: var(--hn-text);
+        margin: 0 6px;
+      }
+      .footer-nav a:visited { color: var(--hn-text); }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="topbar">
+        <a class="logo" href="/">K</a>
+        <a class="brand" href="/">KaranVersation</a>
+        <div class="tagline">
+          <a href="/category/programming/">programming</a> |
+          <a href="/category/prototypes/">prototypes</a> |
+          <a href="/category/ideas/">ideas</a>
+        </div>
+      </div>
+      <div class="content">
+        <h1 class="post-title">A Basic Flask + HAProxy + MySQL integration</h1>
+        <div class="post-meta">
+          March 22, 2021
+        </div>
+        <div class="post-body">
+          <p><img src="https://cdn-images-1.medium.com/max/800/0*u4KUBkRkX0BHVYEd.png" alt="Architecture Diagram" /></p>
 
 <p>Documenting how to spin up a quick PoC of integrating a Flask app with MySQL through HAProxy. Our flask app will run on a gunicorn server locally.</p>
 
@@ -171,52 +333,89 @@ gunicorn <span class="nt">-w</span> 1 <span class="nt">-k</span> gevent app:app 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SHOW</span> <span class="n">PROCESSLIST</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>And MySQL will show you one connection made for the above curl.</p>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">Smart Cities | Pradeya — An Idea for the Grassroots</title><link href="http://localhost:4000/prototypes/2017/06/03/smart-cities-pradeya.html" rel="alternate" type="text/html" title="Smart Cities | Pradeya — An Idea for the Grassroots" /><published>2017-06-03T00:00:00+05:30</published><updated>2017-06-03T00:00:00+05:30</updated><id>http://localhost:4000/prototypes/2017/06/03/smart-cities-pradeya</id><content type="html" xml:base="http://localhost:4000/prototypes/2017/06/03/smart-cities-pradeya.html"><![CDATA[<h2 id="pradeya--platform-for-automated-distribution-of-unused-items">Pradeya — Platform for Automated Distribution of Unused Items</h2>
+<p>And MySQL will show you one connection made for the above curl.</p>
 
-<p><img src="https://cdn-images-1.medium.com/max/800/0*JBbP9rBgVF7mel7Y.jpg" alt="Pradeya" /></p>
-
-<h3 id="summary">Summary</h3>
-
-<p>With rapid urbanisation, the country is facing massive waste management challenges. Over 377 million urban people generate 62 million tonnes of municipal solid waste per annum. Alongside, per annum more than ₹1 lakh crore worth of food is wasted.</p>
-
-<p>On the other side, with population below poverty line reaching 25 per cent, and one out of three malnourished children in the world being Indian, we can efficiently employ the principle of “One man’s trash is another man’s treasure”.</p>
-
-<p>Interactive platforms can register unused items, converting the location into a collection point, which can be intelligently communicated to a needy citizen.</p>
-
-<hr />
-
-<h3 id="problem">Problem</h3>
-
-<p>Waste pickers in India represent less than 0.1% of the urban workforce, resulting in extensive waste mismanagement.</p>
-
-<p>For almost 25% of the population living below the poverty line, unused goods can be an invaluable resource. Food wastage alone costs India ₹1 lakh crore every year.</p>
-
-<hr />
-
-<h3 id="solution">Solution</h3>
-
-<p>A multi-platform (Web, App, SMS) portal where people can upload unused goods and spare food (events, restaurants, etc.).</p>
-
-<p>Using BPL and Ration card data, needy individuals can be identified. Aadhaar-linked identity can connect them to nearby collection points, with fair distribution ensured through round-robin allocation.</p>
-
-<hr />
-
-<h3 id="impact">Impact</h3>
-
-<p>Demand-driven distribution of unused items can significantly reduce waste.</p>
-
-<p>Intelligent analytics can ensure fairness and trust in distribution, feeding families and improving food security.</p>
-
-<hr />
-
-<h3 id="technology">Technology</h3>
-
-<p>Adobe Experience Manager<br />
-Adobe Analytics<br />
-Adobe Campaign</p>
-
-<hr />
-
-<h3 id="demo">Demo</h3>
-
-<p><a href="https://www.youtube.com/watch?v=apg1lYx4Mvk">https://www.youtube.com/watch?v=apg1lYx4Mvk</a></p>]]></content><author><name></name></author><category term="prototypes" /><summary type="html"><![CDATA[Pradeya — Platform for Automated Distribution of Unused Items]]></summary></entry></feed>
+        </div>
+        <a class="back-link" href="/">← Back to posts</a>
+        <div class="footer-nav">
+          <a href="mailto:karanbajaj23@gmail.com">Contact</a> |
+          <a href="https://www.linkedin.com/in/k-bajaj/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function() {
+        const VISIT_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
+        const STORAGE_KEY = 'karanversation_visits';
+        
+        // Get visited links from localStorage
+        function getVisitedLinks() {
+          try {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : {};
+          } catch (e) {
+            return {};
+          }
+        }
+        
+        // Save visited links to localStorage
+        function saveVisitedLinks(visits) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(visits));
+          } catch (e) {
+            // Ignore storage errors
+          }
+        }
+        
+        // Clean up old visits (older than 15 minutes)
+        function cleanupOldVisits(visits) {
+          const now = Date.now();
+          const cleaned = {};
+          for (const url in visits) {
+            if (now - visits[url] < VISIT_DURATION) {
+              cleaned[url] = visits[url];
+            }
+          }
+          return cleaned;
+        }
+        
+        // Mark links as recently visited
+        function markRecentVisits() {
+          const visits = cleanupOldVisits(getVisitedLinks());
+          const now = Date.now();
+          
+          document.querySelectorAll('.title a, .back-link').forEach(function(link) {
+            const url = link.href;
+            if (visits[url] && (now - visits[url] < VISIT_DURATION)) {
+              link.classList.add('recently-visited');
+              // Set timeout to remove class after remaining time
+              const remaining = VISIT_DURATION - (now - visits[url]);
+              setTimeout(function() {
+                link.classList.remove('recently-visited');
+              }, remaining);
+            }
+          });
+          
+          saveVisitedLinks(visits);
+        }
+        
+        // Track link clicks
+        function trackLinkClick(url) {
+          const visits = getVisitedLinks();
+          visits[url] = Date.now();
+          saveVisitedLinks(visits);
+        }
+        
+        // Initialize on page load
+        markRecentVisits();
+        
+        // Track clicks on post links
+        document.querySelectorAll('.title a, .back-link').forEach(function(link) {
+          link.addEventListener('click', function() {
+            trackLinkClick(this.href);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>
