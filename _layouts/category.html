@@ -112,7 +112,7 @@ layout: null
       <div class="content">
         <div class="subtext">{{ page.title }}</div>
         <ol class="post-list">
-          {% assign posts = site.categories[page.category] | sort: "date" | reverse %}
+          {% assign posts = site.categories[page.category] | default: empty | sort: "date" | reverse %}
           {% for post in posts %}
             <li class="post-item">
               <span class="rank">{{ forloop.index }}.</span>
@@ -127,6 +127,9 @@ layout: null
             </li>
           {% endfor %}
         </ol>
+        {% if posts == empty %}
+          <div class="footer">No posts in this category yet.</div>
+        {% endif %}
         <div class="footer">
           <a href="{{ "/" | relative_url }}">All posts</a>
         </div>
