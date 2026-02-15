@@ -138,7 +138,7 @@ title: Home
                   <a href="{{ post.url }}">{{ post.title }}</a>
                 </div>
                 <div class="subtext">
-                  {{ post.date | date: "%B %d, %Y" }}
+                  {{ post.date | date: "%B %d, %Y" }}{% if post.categories %} | {{ post.categories | join: ", " }}{% endif %}
                 </div>
               </div>
             </li>

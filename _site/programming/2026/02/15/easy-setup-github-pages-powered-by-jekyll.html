@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Easy setup Github Pages powered by Jekyll | karanversation</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+      :root {
+        --hn-orange: #ff6600;
+        --hn-bg: #f6f6ef;
+        --hn-text: #000000;
+        --hn-subtext: #828282;
+        --hn-link: #000000;
+        --hn-visited: #828282;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Verdana, Geneva, sans-serif;
+        background: #ffffff;
+        color: var(--hn-text);
+      }
+      a { color: var(--hn-link); text-decoration: none; }
+      a:visited { color: var(--hn-visited); }
+      a.recently-visited { color: var(--hn-visited); }
+      .page {
+        max-width: 960px;
+        margin: 8px auto;
+        background: var(--hn-bg);
+        border: 1px solid #e6e6df;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: var(--hn-orange);
+        font-size: clamp(11px, 1.2vw, 14px);
+      }
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.5em;
+        height: 1.5em;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 1em;
+        line-height: 1;
+        text-decoration: none;
+      }
+      .logo:visited { color: #ffffff; }
+      .brand {
+        font-weight: bold;
+        font-size: 1em;
+        color: #000000;
+      }
+      .brand:visited { color: #000000; }
+      .tagline {
+        font-size: 0.85em;
+        color: #000000;
+        opacity: 0.9;
+      }
+      .tagline a { color: #000000; }
+      .tagline a:visited { color: #000000; }
+      .content {
+        padding: 14px 12px 28px;
+      }
+      .post-title {
+        font-size: 20px;
+        margin: 0 0 6px;
+      }
+      .post-meta {
+        font-size: 11px;
+        color: var(--hn-subtext);
+        margin-bottom: 16px;
+      }
+      .post-body {
+        font-size: 13.5px;
+        line-height: 1.5;
+      }
+      .post-body h1,
+      .post-body h2,
+      .post-body h3 {
+        font-size: 16px;
+        margin: 20px 0 8px;
+      }
+      .post-body p { margin: 10px 0; }
+      .post-body ul,
+      .post-body ol { padding-left: 20px; }
+      .post-body li { margin: 4px 0; }
+      .post-body img {
+        max-width: 100%;
+        height: auto;
+      }
+      .post-body code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        background: #eeeeee;
+        padding: 1px 3px;
+      }
+      .post-body pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 14px;
+        overflow: auto;
+        border: 1px solid #1a1a1a;
+        border-radius: 4px;
+        margin: 16px 0;
+      }
+      .post-body pre code {
+        background: transparent;
+        color: #f8f8f2;
+        padding: 0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .post-body hr {
+        border: none;
+        border-top: 1px solid #e1e1da;
+        margin: 16px 0;
+      }
+      .back-link {
+        display: inline-block;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        margin-top: 18px;
+      }
+      .footer-nav {
+        border-top: 2px solid var(--hn-orange);
+        margin-top: 16px;
+        padding: 10px 0 12px;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        text-align: center;
+      }
+      .footer-nav a {
+        color: var(--hn-text);
+        margin: 0 6px;
+      }
+      .footer-nav a:visited { color: var(--hn-text); }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="topbar">
+        <a class="logo" href="/">K</a>
+        <a class="brand" href="/">KaranVersation</a>
+        <div class="tagline">
+          <a href="/category/programming/">programming</a> |
+          <a href="/category/prototypes/">prototypes</a> |
+          <a href="/category/ideas/">ideas</a>
+        </div>
+      </div>
+      <div class="content">
+        <h1 class="post-title">Easy setup Github Pages powered by Jekyll</h1>
+        <div class="post-meta">
+          February 15, 2026
+        </div>
+        <div class="post-body">
+          <p>A guide to setting up a Jekyll-based blog on GitHub Pages and testing it locally.</p>
+
+<h2 id="setting-up-github-pages-with-jekyll">Setting up GitHub Pages with Jekyll</h2>
+
+<h3 id="step-1-create-a-github-repository">Step 1: Create a GitHub Repository</h3>
+
+<ol>
+  <li>Go to GitHub and create a new repository</li>
+  <li>Name it <code class="language-plaintext highlighter-rouge">yourusername.github.io</code> (replace <code class="language-plaintext highlighter-rouge">yourusername</code> with your GitHub username)</li>
+  <li>Make it public (required for free GitHub Pages)</li>
+  <li>Initialize with a README (optional)</li>
+</ol>
+
+<h3 id="step-2-choose-a-jekyll-theme">Step 2: Choose a Jekyll Theme</h3>
+
+<p>GitHub Pages supports several Jekyll themes. You can:</p>
+
+<p><strong>Option A: Use a built-in theme (easiest)</strong></p>
+
+<p>Create a <code class="language-plaintext highlighter-rouge">_config.yml</code> file in your repository root:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">title</span><span class="pi">:</span> <span class="s">Your Blog Title</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Your blog description</span>
+<span class="na">theme</span><span class="pi">:</span> <span class="s">minima</span>
+</code></pre></div></div>
+
+<p>Then create an <code class="language-plaintext highlighter-rouge">index.md</code> or <code class="language-plaintext highlighter-rouge">index.html</code> file as your homepage.</p>
+
+<p><strong>Option B: Use a custom theme</strong></p>
+
+<ol>
+  <li>Fork or clone a Jekyll theme repository</li>
+  <li>Customize the <code class="language-plaintext highlighter-rouge">_config.yml</code> file</li>
+  <li>Push to your <code class="language-plaintext highlighter-rouge">username.github.io</code> repository</li>
+</ol>
+
+<h3 id="step-3-basic-jekyll-structure">Step 3: Basic Jekyll Structure</h3>
+
+<p>Create these essential files and directories:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your-repo/
+├── _config.yml          # Site configuration
+├── _posts/              # Blog posts (YYYY-MM-DD-title.md)
+├── index.html           # Homepage
+├── _layouts/            # HTML layouts (optional)
+└── assets/              # CSS, images, etc. (optional)
+</code></pre></div></div>
+
+<h3 id="step-4-create-your-first-post">Step 4: Create Your First Post</h3>
+
+<p>Create a <code class="language-plaintext highlighter-rouge">_posts</code> directory and add a file named <code class="language-plaintext highlighter-rouge">YYYY-MM-DD-your-post-title.md</code>:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">post</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Your</span><span class="nv"> </span><span class="s">First</span><span class="nv"> </span><span class="s">Post"</span>
+<span class="na">date</span><span class="pi">:</span> <span class="s">2026-02-15</span>
+<span class="nn">---</span>
+
+Your content here...
+</code></pre></div></div>
+
+<h3 id="step-5-enable-github-pages">Step 5: Enable GitHub Pages</h3>
+
+<ol>
+  <li>Go to your repository <strong>Settings</strong></li>
+  <li>Navigate to the <strong>Pages</strong> section</li>
+  <li>Under “Source”, select the branch (usually <code class="language-plaintext highlighter-rouge">main</code> or <code class="language-plaintext highlighter-rouge">master</code>)</li>
+  <li>Click <strong>Save</strong></li>
+  <li>Your site will be available at <code class="language-plaintext highlighter-rouge">https://yourusername.github.io</code> in a few minutes</li>
+</ol>
+
+<hr />
+
+<h2 id="setting-up-local-environment-to-test-pages">Setting up Local Environment to Test Pages</h2>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<ul>
+  <li>Ruby (version 2.6 or higher)</li>
+  <li>RubyGems</li>
+  <li>Bundler</li>
+</ul>
+
+<h3 id="step-1-install-ruby">Step 1: Install Ruby</h3>
+
+<p><strong>On macOS:</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Using Homebrew</span>
+brew <span class="nb">install </span>ruby
+
+<span class="c"># Or using rbenv (recommended)</span>
+brew <span class="nb">install </span>rbenv
+rbenv init
+rbenv <span class="nb">install </span>3.2.3
+rbenv <span class="nb">local </span>3.2.3
+</code></pre></div></div>
+
+<p><strong>On Linux:</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>ruby-full
+</code></pre></div></div>
+
+<p><strong>On Windows:</strong></p>
+
+<p>Download and install Ruby from <a href="https://rubyinstaller.org/">rubyinstaller.org</a>.</p>
+
+<h3 id="step-2-install-bundler">Step 2: Install Bundler</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem <span class="nb">install </span>bundler
+</code></pre></div></div>
+
+<h3 id="step-3-create-gemfile">Step 3: Create Gemfile</h3>
+
+<p>In your repository root, create a <code class="language-plaintext highlighter-rouge">Gemfile</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">source</span> <span class="s2">"https://rubygems.org"</span>
+
+<span class="n">gem</span> <span class="s2">"jekyll"</span><span class="p">,</span> <span class="s2">"~&gt; 4.3"</span>
+<span class="n">gem</span> <span class="s2">"github-pages"</span><span class="p">,</span> <span class="ss">group: :jekyll_plugins</span>
+</code></pre></div></div>
+
+<h3 id="step-4-install-dependencies">Step 4: Install Dependencies</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">install</span>
+</code></pre></div></div>
+
+<h3 id="step-5-run-jekyll-locally">Step 5: Run Jekyll Locally</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll serve
+</code></pre></div></div>
+
+<p>Or with auto-reload:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll serve <span class="nt">--livereload</span>
+</code></pre></div></div>
+
+<p>Your site will be available at <code class="language-plaintext highlighter-rouge">http://127.0.0.1:4000</code>.</p>
+
+<h3 id="step-6-build-for-production">Step 6: Build for Production</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll build
+</code></pre></div></div>
+
+<p>This creates a <code class="language-plaintext highlighter-rouge">_site</code> directory with the generated static site.</p>
+
+<hr />
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<p><strong>Ruby version mismatch</strong></p>
+<ul>
+  <li>Use <code class="language-plaintext highlighter-rouge">rbenv</code> or <code class="language-plaintext highlighter-rouge">rvm</code> to manage Ruby versions</li>
+  <li>Ensure your local Ruby version matches GitHub Pages requirements</li>
+</ul>
+
+<p><strong>Bundle install fails</strong></p>
+<ul>
+  <li>Run <code class="language-plaintext highlighter-rouge">bundle update</code></li>
+  <li>Check Ruby and Bundler versions</li>
+</ul>
+
+<p><strong>Jekyll serve errors</strong></p>
+<ul>
+  <li>Clear Jekyll cache: <code class="language-plaintext highlighter-rouge">rm -rf .jekyll-cache _site</code></li>
+  <li>Restart the Jekyll server</li>
+</ul>
+
+<p>For more information:</p>
+<ul>
+  <li><a href="https://jekyllrb.com/docs/">Jekyll Documentation</a></li>
+  <li><a href="https://docs.github.com/en/pages">GitHub Pages Documentation</a></li>
+  <li><a href="https://jekyllthemes.io/">Jekyll Themes</a></li>
+</ul>
+
+        </div>
+        <a class="back-link" href="/">← Back to posts</a>
+        <div class="footer-nav">
+          <a href="mailto:karanbajaj23@gmail.com">Contact</a> |
+          <a href="https://www.linkedin.com/in/k-bajaj/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function() {
+        const VISIT_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
+        const STORAGE_KEY = 'karanversation_visits';
+        
+        // Get visited links from localStorage
+        function getVisitedLinks() {
+          try {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : {};
+          } catch (e) {
+            return {};
+          }
+        }
+        
+        // Save visited links to localStorage
+        function saveVisitedLinks(visits) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(visits));
+          } catch (e) {
+            // Ignore storage errors
+          }
+        }
+        
+        // Clean up old visits (older than 15 minutes)
+        function cleanupOldVisits(visits) {
+          const now = Date.now();
+          const cleaned = {};
+          for (const url in visits) {
+            if (now - visits[url] < VISIT_DURATION) {
+              cleaned[url] = visits[url];
+            }
+          }
+          return cleaned;
+        }
+        
+        // Mark links as recently visited
+        function markRecentVisits() {
+          const visits = cleanupOldVisits(getVisitedLinks());
+          const now = Date.now();
+          
+          document.querySelectorAll('.title a, .back-link').forEach(function(link) {
+            const url = link.href;
+            if (visits[url] && (now - visits[url] < VISIT_DURATION)) {
+              link.classList.add('recently-visited');
+              // Set timeout to remove class after remaining time
+              const remaining = VISIT_DURATION - (now - visits[url]);
+              setTimeout(function() {
+                link.classList.remove('recently-visited');
+              }, remaining);
+            }
+          });
+          
+          saveVisitedLinks(visits);
+        }
+        
+        // Track link clicks
+        function trackLinkClick(url) {
+          const visits = getVisitedLinks();
+          visits[url] = Date.now();
+          saveVisitedLinks(visits);
+        }
+        
+        // Initialize on page load
+        markRecentVisits();
+        
+        // Track clicks on post links
+        document.querySelectorAll('.title a, .back-link').forEach(function(link) {
+          link.addEventListener('click', function() {
+            trackLinkClick(this.href);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

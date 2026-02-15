@@ -1,4 +1,176 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-02-15T20:26:58+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">karanversation</title><subtitle>Engineering, Programming, (wannabe) Physics and Robotics</subtitle><entry><title type="html">A hybrid MySQL data model with Horizontal Sharding and a Global data platform</title><link href="http://localhost:4000/programming/2023/01/18/hybrid-mysql-data-model-horizontal-sharding-global-data-platform.html" rel="alternate" type="text/html" title="A hybrid MySQL data model with Horizontal Sharding and a Global data platform" /><published>2023-01-18T00:00:00+05:30</published><updated>2023-01-18T00:00:00+05:30</updated><id>http://localhost:4000/programming/2023/01/18/hybrid-mysql-data-model-horizontal-sharding-global-data-platform</id><content type="html" xml:base="http://localhost:4000/programming/2023/01/18/hybrid-mysql-data-model-horizontal-sharding-global-data-platform.html"><![CDATA[<p><img src="https://cdn-images-1.medium.com/max/800/0*L7YtvCgGaabAJnZL.png" alt="MySQL Hosting Platform" /></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-02-15T20:41:38+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">karanversation</title><subtitle>Engineering, Programming, (wannabe) Physics and Robotics</subtitle><entry><title type="html">Easy setup Github Pages powered by Jekyll</title><link href="http://localhost:4000/programming/2026/02/15/easy-setup-github-pages-powered-by-jekyll.html" rel="alternate" type="text/html" title="Easy setup Github Pages powered by Jekyll" /><published>2026-02-15T00:00:00+05:30</published><updated>2026-02-15T00:00:00+05:30</updated><id>http://localhost:4000/programming/2026/02/15/easy-setup-github-pages-powered-by-jekyll</id><content type="html" xml:base="http://localhost:4000/programming/2026/02/15/easy-setup-github-pages-powered-by-jekyll.html"><![CDATA[<p>A guide to setting up a Jekyll-based blog on GitHub Pages and testing it locally.</p>
+
+<h2 id="setting-up-github-pages-with-jekyll">Setting up GitHub Pages with Jekyll</h2>
+
+<h3 id="step-1-create-a-github-repository">Step 1: Create a GitHub Repository</h3>
+
+<ol>
+  <li>Go to GitHub and create a new repository</li>
+  <li>Name it <code class="language-plaintext highlighter-rouge">yourusername.github.io</code> (replace <code class="language-plaintext highlighter-rouge">yourusername</code> with your GitHub username)</li>
+  <li>Make it public (required for free GitHub Pages)</li>
+  <li>Initialize with a README (optional)</li>
+</ol>
+
+<h3 id="step-2-choose-a-jekyll-theme">Step 2: Choose a Jekyll Theme</h3>
+
+<p>GitHub Pages supports several Jekyll themes. You can:</p>
+
+<p><strong>Option A: Use a built-in theme (easiest)</strong></p>
+
+<p>Create a <code class="language-plaintext highlighter-rouge">_config.yml</code> file in your repository root:</p>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">title</span><span class="pi">:</span> <span class="s">Your Blog Title</span>
+<span class="na">description</span><span class="pi">:</span> <span class="s">Your blog description</span>
+<span class="na">theme</span><span class="pi">:</span> <span class="s">minima</span>
+</code></pre></div></div>
+
+<p>Then create an <code class="language-plaintext highlighter-rouge">index.md</code> or <code class="language-plaintext highlighter-rouge">index.html</code> file as your homepage.</p>
+
+<p><strong>Option B: Use a custom theme</strong></p>
+
+<ol>
+  <li>Fork or clone a Jekyll theme repository</li>
+  <li>Customize the <code class="language-plaintext highlighter-rouge">_config.yml</code> file</li>
+  <li>Push to your <code class="language-plaintext highlighter-rouge">username.github.io</code> repository</li>
+</ol>
+
+<h3 id="step-3-basic-jekyll-structure">Step 3: Basic Jekyll Structure</h3>
+
+<p>Create these essential files and directories:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>your-repo/
+├── _config.yml          # Site configuration
+├── _posts/              # Blog posts (YYYY-MM-DD-title.md)
+├── index.html           # Homepage
+├── _layouts/            # HTML layouts (optional)
+└── assets/              # CSS, images, etc. (optional)
+</code></pre></div></div>
+
+<h3 id="step-4-create-your-first-post">Step 4: Create Your First Post</h3>
+
+<p>Create a <code class="language-plaintext highlighter-rouge">_posts</code> directory and add a file named <code class="language-plaintext highlighter-rouge">YYYY-MM-DD-your-post-title.md</code>:</p>
+
+<div class="language-markdown highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nn">---</span>
+<span class="na">layout</span><span class="pi">:</span> <span class="s">post</span>
+<span class="na">title</span><span class="pi">:</span> <span class="s2">"</span><span class="s">Your</span><span class="nv"> </span><span class="s">First</span><span class="nv"> </span><span class="s">Post"</span>
+<span class="na">date</span><span class="pi">:</span> <span class="s">2026-02-15</span>
+<span class="nn">---</span>
+
+Your content here...
+</code></pre></div></div>
+
+<h3 id="step-5-enable-github-pages">Step 5: Enable GitHub Pages</h3>
+
+<ol>
+  <li>Go to your repository <strong>Settings</strong></li>
+  <li>Navigate to the <strong>Pages</strong> section</li>
+  <li>Under “Source”, select the branch (usually <code class="language-plaintext highlighter-rouge">main</code> or <code class="language-plaintext highlighter-rouge">master</code>)</li>
+  <li>Click <strong>Save</strong></li>
+  <li>Your site will be available at <code class="language-plaintext highlighter-rouge">https://yourusername.github.io</code> in a few minutes</li>
+</ol>
+
+<hr />
+
+<h2 id="setting-up-local-environment-to-test-pages">Setting up Local Environment to Test Pages</h2>
+
+<h3 id="prerequisites">Prerequisites</h3>
+
+<ul>
+  <li>Ruby (version 2.6 or higher)</li>
+  <li>RubyGems</li>
+  <li>Bundler</li>
+</ul>
+
+<h3 id="step-1-install-ruby">Step 1: Install Ruby</h3>
+
+<p><strong>On macOS:</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c"># Using Homebrew</span>
+brew <span class="nb">install </span>ruby
+
+<span class="c"># Or using rbenv (recommended)</span>
+brew <span class="nb">install </span>rbenv
+rbenv init
+rbenv <span class="nb">install </span>3.2.3
+rbenv <span class="nb">local </span>3.2.3
+</code></pre></div></div>
+
+<p><strong>On Linux:</strong></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>apt-get <span class="nb">install </span>ruby-full
+</code></pre></div></div>
+
+<p><strong>On Windows:</strong></p>
+
+<p>Download and install Ruby from <a href="https://rubyinstaller.org/">rubyinstaller.org</a>.</p>
+
+<h3 id="step-2-install-bundler">Step 2: Install Bundler</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gem <span class="nb">install </span>bundler
+</code></pre></div></div>
+
+<h3 id="step-3-create-gemfile">Step 3: Create Gemfile</h3>
+
+<p>In your repository root, create a <code class="language-plaintext highlighter-rouge">Gemfile</code>:</p>
+
+<div class="language-ruby highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">source</span> <span class="s2">"https://rubygems.org"</span>
+
+<span class="n">gem</span> <span class="s2">"jekyll"</span><span class="p">,</span> <span class="s2">"~&gt; 4.3"</span>
+<span class="n">gem</span> <span class="s2">"github-pages"</span><span class="p">,</span> <span class="ss">group: :jekyll_plugins</span>
+</code></pre></div></div>
+
+<h3 id="step-4-install-dependencies">Step 4: Install Dependencies</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">install</span>
+</code></pre></div></div>
+
+<h3 id="step-5-run-jekyll-locally">Step 5: Run Jekyll Locally</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll serve
+</code></pre></div></div>
+
+<p>Or with auto-reload:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll serve <span class="nt">--livereload</span>
+</code></pre></div></div>
+
+<p>Your site will be available at <code class="language-plaintext highlighter-rouge">http://127.0.0.1:4000</code>.</p>
+
+<h3 id="step-6-build-for-production">Step 6: Build for Production</h3>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>bundle <span class="nb">exec </span>jekyll build
+</code></pre></div></div>
+
+<p>This creates a <code class="language-plaintext highlighter-rouge">_site</code> directory with the generated static site.</p>
+
+<hr />
+
+<h2 id="troubleshooting">Troubleshooting</h2>
+
+<p><strong>Ruby version mismatch</strong></p>
+<ul>
+  <li>Use <code class="language-plaintext highlighter-rouge">rbenv</code> or <code class="language-plaintext highlighter-rouge">rvm</code> to manage Ruby versions</li>
+  <li>Ensure your local Ruby version matches GitHub Pages requirements</li>
+</ul>
+
+<p><strong>Bundle install fails</strong></p>
+<ul>
+  <li>Run <code class="language-plaintext highlighter-rouge">bundle update</code></li>
+  <li>Check Ruby and Bundler versions</li>
+</ul>
+
+<p><strong>Jekyll serve errors</strong></p>
+<ul>
+  <li>Clear Jekyll cache: <code class="language-plaintext highlighter-rouge">rm -rf .jekyll-cache _site</code></li>
+  <li>Restart the Jekyll server</li>
+</ul>
+
+<p>For more information:</p>
+<ul>
+  <li><a href="https://jekyllrb.com/docs/">Jekyll Documentation</a></li>
+  <li><a href="https://docs.github.com/en/pages">GitHub Pages Documentation</a></li>
+  <li><a href="https://jekyllthemes.io/">Jekyll Themes</a></li>
+</ul>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[A guide to setting up a Jekyll-based blog on GitHub Pages and testing it locally.]]></summary></entry><entry><title type="html">A hybrid MySQL data model with Horizontal Sharding and a Global data platform</title><link href="http://localhost:4000/programming/2023/01/18/hybrid-mysql-data-model-horizontal-sharding-global-data-platform.html" rel="alternate" type="text/html" title="A hybrid MySQL data model with Horizontal Sharding and a Global data platform" /><published>2023-01-18T00:00:00+05:30</published><updated>2023-01-18T00:00:00+05:30</updated><id>http://localhost:4000/programming/2023/01/18/hybrid-mysql-data-model-horizontal-sharding-global-data-platform</id><content type="html" xml:base="http://localhost:4000/programming/2023/01/18/hybrid-mysql-data-model-horizontal-sharding-global-data-platform.html"><![CDATA[<p><img src="https://cdn-images-1.medium.com/max/800/0*L7YtvCgGaabAJnZL.png" alt="MySQL Hosting Platform" /></p>
 
 <p><em>Image src: <a href="https://geekflare.com/mysql-hosting-platform/">https://geekflare.com/mysql-hosting-platform/</a></em></p>
 
