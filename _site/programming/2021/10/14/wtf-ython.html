@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ideas | karanversation</title>
+    <title>wtf-ython | karanversation</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <style>
       :root {
@@ -68,35 +68,65 @@
       .content {
         padding: 14px 12px 28px;
       }
-      .post-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+      .post-title {
+        font-size: 20px;
+        margin: 0 0 6px;
       }
-      .post-item {
-        display: grid;
-        grid-template-columns: 28px 1fr;
-        gap: 10px;
-        align-items: baseline;
-        padding: 6px 0;
-      }
-      .rank {
-        color: var(--hn-subtext);
-        font-size: 12px;
-        text-align: right;
-      }
-      .title {
-        font-size: 14px;
-      }
-      .subtext {
-        font-size: 10.5px;
-        color: var(--hn-subtext);
-        margin-top: 2px;
-      }
-      .footer {
-        padding-top: 12px;
+      .post-meta {
         font-size: 11px;
         color: var(--hn-subtext);
+        margin-bottom: 16px;
+      }
+      .post-body {
+        font-size: 13.5px;
+        line-height: 1.5;
+      }
+      .post-body h1,
+      .post-body h2,
+      .post-body h3 {
+        font-size: 16px;
+        margin: 20px 0 8px;
+      }
+      .post-body p { margin: 10px 0; }
+      .post-body ul,
+      .post-body ol { padding-left: 20px; }
+      .post-body li { margin: 4px 0; }
+      .post-body img {
+        max-width: 100%;
+        height: auto;
+      }
+      .post-body code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        background: #eeeeee;
+        padding: 1px 3px;
+      }
+      .post-body pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 14px;
+        overflow: auto;
+        border: 1px solid #1a1a1a;
+        border-radius: 4px;
+        margin: 16px 0;
+      }
+      .post-body pre code {
+        background: transparent;
+        color: #f8f8f2;
+        padding: 0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .post-body hr {
+        border: none;
+        border-top: 1px solid #e1e1da;
+        margin: 16px 0;
+      }
+      .back-link {
+        display: inline-block;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        margin-top: 18px;
       }
       .footer-nav {
         border-top: 2px solid var(--hn-orange);
@@ -125,40 +155,39 @@
         </div>
       </div>
       <div class="content">
-        <div class="subtext">Ideas</div>
-        <ol class="post-list">
-          
-          
-          
-            <li class="post-item">
-              <span class="rank">1.</span>
-              <div>
-                <div class="title">
-                  <a href="/ideas/2021/05/01/google-authenticator-on-phone-laptop.html">Google Authenticator on Phone + Laptop</a>
-                </div>
-                <div class="subtext">
-                  May 01, 2021
-                </div>
-              </div>
-            </li>
-          
-            <li class="post-item">
-              <span class="rank">2.</span>
-              <div>
-                <div class="title">
-                  <a href="/ideas/2019/09/18/problem-solving-code-interview-45-mins.html">Problem-solving & Code interview in 45 mins</a>
-                </div>
-                <div class="subtext">
-                  September 18, 2019
-                </div>
-              </div>
-            </li>
-          
-        </ol>
-        
-        <div class="footer">
-          <a href="/">All posts</a>
+        <h1 class="post-title">wtf-ython</h1>
+        <div class="post-meta">
+          October 14, 2021
         </div>
+        <div class="post-body">
+          <h1 id="wtf-ython">wtf-ython</h1>
+
+<p><em>(Nano-blog alert)</em></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="nb">bool</span><span class="p">(...)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1_00_000</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+   <span class="p">...:</span>     <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+   <span class="p">...:</span>         <span class="k">break</span>
+   <span class="p">...:</span> <span class="k">else</span><span class="p">:</span>
+   <span class="p">...:</span>     <span class="k">print</span><span class="p">(</span><span class="s">'Nice'</span><span class="p">)</span>
+   <span class="p">...:</span>
+<span class="n">Nice</span>
+</code></pre></div></div>
+
+<p>Getting to know none of these throw a syntax error = Mind blown ^_^</p>
+
+<p>Full blog and credits: <a href="https://towardsdatascience.com/hidden-gems-of-python-76020b14e42f">https://towardsdatascience.com/hidden-gems-of-python-76020b14e42f</a></p>
+
+<p>K.</p>
+
+        </div>
+        <a class="back-link" href="/">← Back to posts</a>
         <div class="footer-nav">
           <a href="mailto:karanbajaj23@gmail.com">Contact</a> |
           <a href="https://www.linkedin.com/in/k-bajaj/" target="_blank" rel="noopener noreferrer">LinkedIn</a>

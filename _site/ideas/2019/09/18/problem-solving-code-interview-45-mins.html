@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Ideas | karanversation</title>
+    <title>Problem-solving & Code interview in 45 mins | karanversation</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <style>
       :root {
@@ -68,35 +68,65 @@
       .content {
         padding: 14px 12px 28px;
       }
-      .post-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+      .post-title {
+        font-size: 20px;
+        margin: 0 0 6px;
       }
-      .post-item {
-        display: grid;
-        grid-template-columns: 28px 1fr;
-        gap: 10px;
-        align-items: baseline;
-        padding: 6px 0;
-      }
-      .rank {
-        color: var(--hn-subtext);
-        font-size: 12px;
-        text-align: right;
-      }
-      .title {
-        font-size: 14px;
-      }
-      .subtext {
-        font-size: 10.5px;
-        color: var(--hn-subtext);
-        margin-top: 2px;
-      }
-      .footer {
-        padding-top: 12px;
+      .post-meta {
         font-size: 11px;
         color: var(--hn-subtext);
+        margin-bottom: 16px;
+      }
+      .post-body {
+        font-size: 13.5px;
+        line-height: 1.5;
+      }
+      .post-body h1,
+      .post-body h2,
+      .post-body h3 {
+        font-size: 16px;
+        margin: 20px 0 8px;
+      }
+      .post-body p { margin: 10px 0; }
+      .post-body ul,
+      .post-body ol { padding-left: 20px; }
+      .post-body li { margin: 4px 0; }
+      .post-body img {
+        max-width: 100%;
+        height: auto;
+      }
+      .post-body code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        background: #eeeeee;
+        padding: 1px 3px;
+      }
+      .post-body pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 14px;
+        overflow: auto;
+        border: 1px solid #1a1a1a;
+        border-radius: 4px;
+        margin: 16px 0;
+      }
+      .post-body pre code {
+        background: transparent;
+        color: #f8f8f2;
+        padding: 0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .post-body hr {
+        border: none;
+        border-top: 1px solid #e1e1da;
+        margin: 16px 0;
+      }
+      .back-link {
+        display: inline-block;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        margin-top: 18px;
       }
       .footer-nav {
         border-top: 2px solid var(--hn-orange);
@@ -125,40 +155,51 @@
         </div>
       </div>
       <div class="content">
-        <div class="subtext">Ideas</div>
-        <ol class="post-list">
-          
-          
-          
-            <li class="post-item">
-              <span class="rank">1.</span>
-              <div>
-                <div class="title">
-                  <a href="/ideas/2021/05/01/google-authenticator-on-phone-laptop.html">Google Authenticator on Phone + Laptop</a>
-                </div>
-                <div class="subtext">
-                  May 01, 2021
-                </div>
-              </div>
-            </li>
-          
-            <li class="post-item">
-              <span class="rank">2.</span>
-              <div>
-                <div class="title">
-                  <a href="/ideas/2019/09/18/problem-solving-code-interview-45-mins.html">Problem-solving & Code interview in 45 mins</a>
-                </div>
-                <div class="subtext">
-                  September 18, 2019
-                </div>
-              </div>
-            </li>
-          
-        </ol>
-        
-        <div class="footer">
-          <a href="/">All posts</a>
+        <h1 class="post-title">Problem-solving & Code interview in 45 mins</h1>
+        <div class="post-meta">
+          September 18, 2019
         </div>
+        <div class="post-body">
+          <h1 id="taking-a-problem-solvingcoding-interview-in-45-mins">Taking a problem-solving/coding interview in 45 mins</h1>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*-y0MENvgy9qoj7yU.png" alt="Interview Process" /></p>
+
+<p>Notes on my experiments with effective coding/PS interview.</p>
+
+<ol>
+  <li>Start with a rough problem statement.</li>
+  <li>Did candidate ask questions to clarify and establish scope?</li>
+  <li>Ask which data structure to be used? What other options are there? Why this one?</li>
+  <li>Did candidate use single class or decompose to multiple? OOP-thinking?</li>
+  <li>Ask scenarios. Types and counts of each type?</li>
+  <li>Did candidate think TDD? Were cover corner cases covered?</li>
+  <li>Test approach to solution.</li>
+  <li>First principles thinking?</li>
+  <li>Did candidate get biased by scenarios thought of earlier?</li>
+  <li>Does candidate get confused by counter questioning?</li>
+  <li>How is the confidence on approach taken?</li>
+  <li>Receptive to hints and feedback?</li>
+  <li>Make candidate write code.</li>
+  <li>Correct syntax &amp; chosen language conventions followed acceptably.</li>
+</ol>
+
+<p><strong>Bonus</strong>:</p>
+
+<ol>
+  <li>Document code in Google docs. If offline, collect papers for later reference.</li>
+  <li>Open Google Timer setting it to 45 mins — check duration overflow.</li>
+  <li>Try to standardize evaluation metrics (depending on which round — coding, design, project, etc.) and keep them consistent across candidates.</li>
+  <li>Capture feedback as H/M/L rating and quick notes based on (2)</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*P5xwSkuV0hcOrO_eW8qnlg.png" alt="Evaluation Metrics" /></p>
+
+<p>Remarkable how sometimes the most non-trivial problems need the simplest of solutions.</p>
+
+<p>K.</p>
+
+        </div>
+        <a class="back-link" href="/">← Back to posts</a>
         <div class="footer-nav">
           <a href="mailto:karanbajaj23@gmail.com">Contact</a> |
           <a href="https://www.linkedin.com/in/k-bajaj/" target="_blank" rel="noopener noreferrer">LinkedIn</a>

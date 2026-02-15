@@ -1,0 +1,341 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>A hybrid MySQL data model with Horizontal Sharding and a Global data platform | karanversation</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+      :root {
+        --hn-orange: #ff6600;
+        --hn-bg: #f6f6ef;
+        --hn-text: #000000;
+        --hn-subtext: #828282;
+        --hn-link: #000000;
+        --hn-visited: #828282;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Verdana, Geneva, sans-serif;
+        background: #ffffff;
+        color: var(--hn-text);
+      }
+      a { color: var(--hn-link); text-decoration: none; }
+      a:visited { color: var(--hn-visited); }
+      a.recently-visited { color: var(--hn-visited); }
+      .page {
+        max-width: 960px;
+        margin: 8px auto;
+        background: var(--hn-bg);
+        border: 1px solid #e6e6df;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: var(--hn-orange);
+        font-size: clamp(11px, 1.2vw, 14px);
+      }
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.5em;
+        height: 1.5em;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 1em;
+        line-height: 1;
+        text-decoration: none;
+      }
+      .logo:visited { color: #ffffff; }
+      .brand {
+        font-weight: bold;
+        font-size: 1em;
+        color: #000000;
+      }
+      .brand:visited { color: #000000; }
+      .tagline {
+        font-size: 0.85em;
+        color: #000000;
+        opacity: 0.9;
+      }
+      .tagline a { color: #000000; }
+      .tagline a:visited { color: #000000; }
+      .content {
+        padding: 14px 12px 28px;
+      }
+      .post-title {
+        font-size: 20px;
+        margin: 0 0 6px;
+      }
+      .post-meta {
+        font-size: 11px;
+        color: var(--hn-subtext);
+        margin-bottom: 16px;
+      }
+      .post-body {
+        font-size: 13.5px;
+        line-height: 1.5;
+      }
+      .post-body h1,
+      .post-body h2,
+      .post-body h3 {
+        font-size: 16px;
+        margin: 20px 0 8px;
+      }
+      .post-body p { margin: 10px 0; }
+      .post-body ul,
+      .post-body ol { padding-left: 20px; }
+      .post-body li { margin: 4px 0; }
+      .post-body img {
+        max-width: 100%;
+        height: auto;
+      }
+      .post-body code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        background: #eeeeee;
+        padding: 1px 3px;
+      }
+      .post-body pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 14px;
+        overflow: auto;
+        border: 1px solid #1a1a1a;
+        border-radius: 4px;
+        margin: 16px 0;
+      }
+      .post-body pre code {
+        background: transparent;
+        color: #f8f8f2;
+        padding: 0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .post-body hr {
+        border: none;
+        border-top: 1px solid #e1e1da;
+        margin: 16px 0;
+      }
+      .back-link {
+        display: inline-block;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        margin-top: 18px;
+      }
+      .footer-nav {
+        border-top: 2px solid var(--hn-orange);
+        margin-top: 16px;
+        padding: 10px 0 12px;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        text-align: center;
+      }
+      .footer-nav a {
+        color: var(--hn-text);
+        margin: 0 6px;
+      }
+      .footer-nav a:visited { color: var(--hn-text); }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="topbar">
+        <a class="logo" href="/">K</a>
+        <a class="brand" href="/">KaranVersation</a>
+        <div class="tagline">
+          <a href="/category/programming/">programming</a> |
+          <a href="/category/prototypes/">prototypes</a> |
+          <a href="/category/ideas/">ideas</a>
+        </div>
+      </div>
+      <div class="content">
+        <h1 class="post-title">A hybrid MySQL data model with Horizontal Sharding and a Global data platform</h1>
+        <div class="post-meta">
+          January 18, 2023
+        </div>
+        <div class="post-body">
+          <h1 id="a-hybrid-mysql-data-model-with-horizontal-sharding-and-a-global-data-platform">A hybrid MySQL data model with Horizontal Sharding and a Global data platform</h1>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*L7YtvCgGaabAJnZL.png" alt="MySQL Hosting Platform" /></p>
+
+<p><em>Image src: <a href="https://geekflare.com/mysql-hosting-platform/">https://geekflare.com/mysql-hosting-platform/</a></em></p>
+
+<p>A very popular interview question revolves around choosing MySQL vs NoSQL data stores. This decision is much more relevant for early startups as their choice determines potential data scalability and performance bottlenecks in the future. A smart decision at this point can save painstaking effort to redesign and mass-migrate data later.</p>
+
+<p>For us, our final data model ended up helping us build our own sharding scheme that scaled our database infra by 100x, and also build a cross-region replication framework with a team of just two engineering in a span of ~6 months.</p>
+
+<p>Let’s look at the high-level database requirements of a typical startup -</p>
+
+<ul>
+  <li>The overall system needs to be very stable and easy to operate and maintain</li>
+  <li>The schema should be easy to update and flexible to avoid large structural changes in the future.</li>
+  <li>Ok to have not petabyte-scale upfront, but easy to scale both vertically and horizontally in the near future as more customers get onboarded.</li>
+  <li>Has strong documentation and community support to help with quick decision-making.</li>
+</ul>
+
+<p>Now MySQL ticks a lot of checkboxes above and provides many inbuilt DB features (auto increment, indexes, partitions) that make it easy to create efficient datastores upfront with relative ease.
+But the matter of fact is — MySQL was originally designed as a single-node system and not with the modern distributed data center setup in mind. Also, unless very carefully planned, audited and updated, MySQL schema can become too rigid to help accommodate needs of a dynamic data model.</p>
+
+<p>At my current organisation, our data architects realized this early on and thought of how to implement a datastore that gives us the best of both worlds -</p>
+
+<ul>
+  <li>Excels at traditional DB properties (ACID) providing us DB features like auto increment, indexes, paritions, etc.</li>
+  <li>Has a balanced read/write performance</li>
+  <li>Doesn’t have us worried about the future limitations of scale</li>
+  <li>And best of all — lets us use SQL, which can be called the ‘English language of the database world’</li>
+</ul>
+
+<p>To achieve this, we implemented our data model in MySQL with a few key ground rules -</p>
+
+<ul>
+  <li>No SQL foreign key relationships</li>
+  <li>No JOINS in SQL for production queries</li>
+  <li>By default, prefer columns instead of an opaque JSON blob</li>
+  <li>JSON is OK for certain data that may be unstructured</li>
+  <li>Denormalize data in tables based on use case, caching and write/update paths</li>
+</ul>
+
+<p>It might be evident from above that each of our table has one set of individual columns and another set of JSON blobs. This helps us achieve a normalization and denormalization hybrid.</p>
+
+<p>Each top-level entity — like candidate profile or job position — has its table with standard individual columns that we may frequently use in indexes, eg: timestamps, users, category, etc.
+The json blob field, on the other hand, may store any unstructured data that is directly associated with table entity. Eg: Details of certifications of a profile as a certificates_json column in profile table.</p>
+
+<p>This follows a set of second-level entities like profile tags, notes, etc. that need a reference to the original top-level entity — profile in this case.</p>
+
+<p>While we may store the id of the top-level profile in a column in profile_tag for instance, we do not establish a SQL foreign key relationship. This helps us still keep relationships loose.</p>
+
+<p>A top-level entity may have a one-to-many relationship with other entities just by aggregating entity ids as part of the data_json field.</p>
+
+<p>Our tables are designed in a way that most application lookups are</p>
+
+<h2 id="sharding-mysql">Sharding MySQL</h2>
+
+<p>The true merit of our data model showed up once we started implementing our own custom application-level sharding on top of MySQL.</p>
+
+<p>Almost 95% of our data is logically partitioned on basis of customer ids. We needed a way to physically partition these customer ids into multiple database clusters without losing out on O(1) lookup performance.</p>
+
+<p>Introducing a layer of indirection in between, we mapped customers to logical shards and shards to physical clusters. This made sure we could distribute a customer in one or many clusters, or have multiple customers present on the same physical cluster. Our data infrastructure could operate in both single and multi tenant modes.</p>
+
+<p>Implementation — We use entity id to encode details of which shard a customer maps to. Each table row also has the customer_id.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>entity_id = <span class="nt">&lt;shard_id&gt;</span> <span class="err">&lt;</span><span class="nt">&lt; A</span> <span class="err">|</span> <span class="err">&lt;sequence_id</span><span class="nt">&gt;</span>
+customer_id
+</code></pre></div></div>
+
+<sequence_id> is generated from a sequence table that has an auto_increment field, while there is no auto_increment field in our main data table.
+
+Now once our metadata stores mapping between customer_id to shards and shards to physical clusters, so while making db connections we can pick the correct cluster or set of clusters to execute the query in.
+
+## Shard migration
+
+Keeping our sharding scheme backwards compatible, we had used shard_id 0 for all these customers. But with more data we needed to 'extract' these customers out from shard_id 0 to newer shards existing on separate clusters.
+
+To achieve this, we created a shard migration framework that was capable of performing in-place id translation from one shard_id to another. We were able to achieve this in a simple way due to the no-foreign-key constraint.
+
+## Global data platform
+
+While operating in data stores across multiple AWS regions — some of these did not support AWS Global clusters. We hence wanted to build a equivalent global replication framework, that can make sure clusters across regions are eventually consistent.
+
+We again made use of our sharding strategy to include a global bit -
+
+```xml
+entity_id = <global_bit> &lt;&lt; B | <shard_id> &lt;&lt; A |  &lt; <sequence_id>
+```
+
+We also implemented SQS based propagation of db save operations that are handled in the other region by a batch processing framework.
+
+Originally delivered as a Tech Talk at Rootconf 2021 — Choosing Datastores
+
+[https://hasgeek.com/rootconf/choosing-datastores/sub/a-hybrid-mysql-data-model-with-horizontal-sharding-76HxjKhwwWXVbmUvbGphXT](https://hasgeek.com/rootconf/choosing-datastores/sub/a-hybrid-mysql-data-model-with-horizontal-sharding-76HxjKhwwWXVbmUvbGphXT)
+</sequence_id></shard_id></global_bit></sequence_id>
+
+        </div>
+        <a class="back-link" href="/">← Back to posts</a>
+        <div class="footer-nav">
+          <a href="mailto:karanbajaj23@gmail.com">Contact</a> |
+          <a href="https://www.linkedin.com/in/k-bajaj/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function() {
+        const VISIT_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
+        const STORAGE_KEY = 'karanversation_visits';
+        
+        // Get visited links from localStorage
+        function getVisitedLinks() {
+          try {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : {};
+          } catch (e) {
+            return {};
+          }
+        }
+        
+        // Save visited links to localStorage
+        function saveVisitedLinks(visits) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(visits));
+          } catch (e) {
+            // Ignore storage errors
+          }
+        }
+        
+        // Clean up old visits (older than 15 minutes)
+        function cleanupOldVisits(visits) {
+          const now = Date.now();
+          const cleaned = {};
+          for (const url in visits) {
+            if (now - visits[url] < VISIT_DURATION) {
+              cleaned[url] = visits[url];
+            }
+          }
+          return cleaned;
+        }
+        
+        // Mark links as recently visited
+        function markRecentVisits() {
+          const visits = cleanupOldVisits(getVisitedLinks());
+          const now = Date.now();
+          
+          document.querySelectorAll('.title a, .back-link').forEach(function(link) {
+            const url = link.href;
+            if (visits[url] && (now - visits[url] < VISIT_DURATION)) {
+              link.classList.add('recently-visited');
+              // Set timeout to remove class after remaining time
+              const remaining = VISIT_DURATION - (now - visits[url]);
+              setTimeout(function() {
+                link.classList.remove('recently-visited');
+              }, remaining);
+            }
+          });
+          
+          saveVisitedLinks(visits);
+        }
+        
+        // Track link clicks
+        function trackLinkClick(url) {
+          const visits = getVisitedLinks();
+          visits[url] = Date.now();
+          saveVisitedLinks(visits);
+        }
+        
+        // Initialize on page load
+        markRecentVisits();
+        
+        // Track clicks on post links
+        document.querySelectorAll('.title a, .back-link').forEach(function(link) {
+          link.addEventListener('click', function() {
+            trackLinkClick(this.href);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

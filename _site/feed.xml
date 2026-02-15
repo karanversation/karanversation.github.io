@@ -1,4 +1,151 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-02-15T19:53:10+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">karanversation</title><subtitle>Engineering, Programming, (wannabe) Physics and Robotics</subtitle><entry><title type="html">A Basic Flask + HAProxy + MySQL integration</title><link href="http://localhost:4000/programming/2021/03/22/flask-haproxy-mysql-integration.html" rel="alternate" type="text/html" title="A Basic Flask + HAProxy + MySQL integration" /><published>2021-03-22T00:00:00+05:30</published><updated>2021-03-22T00:00:00+05:30</updated><id>http://localhost:4000/programming/2021/03/22/flask-haproxy-mysql-integration</id><content type="html" xml:base="http://localhost:4000/programming/2021/03/22/flask-haproxy-mysql-integration.html"><![CDATA[<p><img src="https://cdn-images-1.medium.com/max/800/0*u4KUBkRkX0BHVYEd.png" alt="Architecture Diagram" /></p>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2026-02-15T20:00:26+05:30</updated><id>http://localhost:4000/feed.xml</id><title type="html">karanversation</title><subtitle>Engineering, Programming, (wannabe) Physics and Robotics</subtitle><entry><title type="html">A hybrid MySQL data model with Horizontal Sharding and a Global data platform</title><link href="http://localhost:4000/programming/2023/01/18/hybrid-mysql-data-model-horizontal-sharding-global-data-platform.html" rel="alternate" type="text/html" title="A hybrid MySQL data model with Horizontal Sharding and a Global data platform" /><published>2023-01-18T00:00:00+05:30</published><updated>2023-01-18T00:00:00+05:30</updated><id>http://localhost:4000/programming/2023/01/18/hybrid-mysql-data-model-horizontal-sharding-global-data-platform</id><content type="html" xml:base="http://localhost:4000/programming/2023/01/18/hybrid-mysql-data-model-horizontal-sharding-global-data-platform.html"><![CDATA[<h1 id="a-hybrid-mysql-data-model-with-horizontal-sharding-and-a-global-data-platform">A hybrid MySQL data model with Horizontal Sharding and a Global data platform</h1>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*L7YtvCgGaabAJnZL.png" alt="MySQL Hosting Platform" /></p>
+
+<p><em>Image src: <a href="https://geekflare.com/mysql-hosting-platform/">https://geekflare.com/mysql-hosting-platform/</a></em></p>
+
+<p>A very popular interview question revolves around choosing MySQL vs NoSQL data stores. This decision is much more relevant for early startups as their choice determines potential data scalability and performance bottlenecks in the future. A smart decision at this point can save painstaking effort to redesign and mass-migrate data later.</p>
+
+<p>For us, our final data model ended up helping us build our own sharding scheme that scaled our database infra by 100x, and also build a cross-region replication framework with a team of just two engineering in a span of ~6 months.</p>
+
+<p>Let’s look at the high-level database requirements of a typical startup -</p>
+
+<ul>
+  <li>The overall system needs to be very stable and easy to operate and maintain</li>
+  <li>The schema should be easy to update and flexible to avoid large structural changes in the future.</li>
+  <li>Ok to have not petabyte-scale upfront, but easy to scale both vertically and horizontally in the near future as more customers get onboarded.</li>
+  <li>Has strong documentation and community support to help with quick decision-making.</li>
+</ul>
+
+<p>Now MySQL ticks a lot of checkboxes above and provides many inbuilt DB features (auto increment, indexes, partitions) that make it easy to create efficient datastores upfront with relative ease.
+But the matter of fact is — MySQL was originally designed as a single-node system and not with the modern distributed data center setup in mind. Also, unless very carefully planned, audited and updated, MySQL schema can become too rigid to help accommodate needs of a dynamic data model.</p>
+
+<p>At my current organisation, our data architects realized this early on and thought of how to implement a datastore that gives us the best of both worlds -</p>
+
+<ul>
+  <li>Excels at traditional DB properties (ACID) providing us DB features like auto increment, indexes, paritions, etc.</li>
+  <li>Has a balanced read/write performance</li>
+  <li>Doesn’t have us worried about the future limitations of scale</li>
+  <li>And best of all — lets us use SQL, which can be called the ‘English language of the database world’</li>
+</ul>
+
+<p>To achieve this, we implemented our data model in MySQL with a few key ground rules -</p>
+
+<ul>
+  <li>No SQL foreign key relationships</li>
+  <li>No JOINS in SQL for production queries</li>
+  <li>By default, prefer columns instead of an opaque JSON blob</li>
+  <li>JSON is OK for certain data that may be unstructured</li>
+  <li>Denormalize data in tables based on use case, caching and write/update paths</li>
+</ul>
+
+<p>It might be evident from above that each of our table has one set of individual columns and another set of JSON blobs. This helps us achieve a normalization and denormalization hybrid.</p>
+
+<p>Each top-level entity — like candidate profile or job position — has its table with standard individual columns that we may frequently use in indexes, eg: timestamps, users, category, etc.
+The json blob field, on the other hand, may store any unstructured data that is directly associated with table entity. Eg: Details of certifications of a profile as a certificates_json column in profile table.</p>
+
+<p>This follows a set of second-level entities like profile tags, notes, etc. that need a reference to the original top-level entity — profile in this case.</p>
+
+<p>While we may store the id of the top-level profile in a column in profile_tag for instance, we do not establish a SQL foreign key relationship. This helps us still keep relationships loose.</p>
+
+<p>A top-level entity may have a one-to-many relationship with other entities just by aggregating entity ids as part of the data_json field.</p>
+
+<p>Our tables are designed in a way that most application lookups are</p>
+
+<h2 id="sharding-mysql">Sharding MySQL</h2>
+
+<p>The true merit of our data model showed up once we started implementing our own custom application-level sharding on top of MySQL.</p>
+
+<p>Almost 95% of our data is logically partitioned on basis of customer ids. We needed a way to physically partition these customer ids into multiple database clusters without losing out on O(1) lookup performance.</p>
+
+<p>Introducing a layer of indirection in between, we mapped customers to logical shards and shards to physical clusters. This made sure we could distribute a customer in one or many clusters, or have multiple customers present on the same physical cluster. Our data infrastructure could operate in both single and multi tenant modes.</p>
+
+<p>Implementation — We use entity id to encode details of which shard a customer maps to. Each table row also has the customer_id.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>entity_id = <span class="nt">&lt;shard_id&gt;</span> <span class="err">&lt;</span><span class="nt">&lt; A</span> <span class="err">|</span> <span class="err">&lt;sequence_id</span><span class="nt">&gt;</span>
+customer_id
+</code></pre></div></div>
+
+<sequence_id> is generated from a sequence table that has an auto_increment field, while there is no auto_increment field in our main data table.
+
+Now once our metadata stores mapping between customer_id to shards and shards to physical clusters, so while making db connections we can pick the correct cluster or set of clusters to execute the query in.
+
+## Shard migration
+
+Keeping our sharding scheme backwards compatible, we had used shard_id 0 for all these customers. But with more data we needed to 'extract' these customers out from shard_id 0 to newer shards existing on separate clusters.
+
+To achieve this, we created a shard migration framework that was capable of performing in-place id translation from one shard_id to another. We were able to achieve this in a simple way due to the no-foreign-key constraint.
+
+## Global data platform
+
+While operating in data stores across multiple AWS regions — some of these did not support AWS Global clusters. We hence wanted to build a equivalent global replication framework, that can make sure clusters across regions are eventually consistent.
+
+We again made use of our sharding strategy to include a global bit -
+
+```xml
+entity_id = <global_bit> &lt;&lt; B | <shard_id> &lt;&lt; A |  &lt; <sequence_id>
+```
+
+We also implemented SQS based propagation of db save operations that are handled in the other region by a batch processing framework.
+
+Originally delivered as a Tech Talk at Rootconf 2021 — Choosing Datastores
+
+[https://hasgeek.com/rootconf/choosing-datastores/sub/a-hybrid-mysql-data-model-with-horizontal-sharding-76HxjKhwwWXVbmUvbGphXT](https://hasgeek.com/rootconf/choosing-datastores/sub/a-hybrid-mysql-data-model-with-horizontal-sharding-76HxjKhwwWXVbmUvbGphXT)
+</sequence_id></shard_id></global_bit></sequence_id>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[A hybrid MySQL data model with Horizontal Sharding and a Global data platform]]></summary></entry><entry><title type="html">wtf-ython</title><link href="http://localhost:4000/programming/2021/10/14/wtf-ython.html" rel="alternate" type="text/html" title="wtf-ython" /><published>2021-10-14T00:00:00+05:30</published><updated>2021-10-14T00:00:00+05:30</updated><id>http://localhost:4000/programming/2021/10/14/wtf-ython</id><content type="html" xml:base="http://localhost:4000/programming/2021/10/14/wtf-ython.html"><![CDATA[<h1 id="wtf-ython">wtf-ython</h1>
+
+<p><em>(Nano-blog alert)</em></p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="nb">bool</span><span class="p">(...)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="bp">True</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">a</span> <span class="o">=</span> <span class="mi">1_00_000</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">]:</span>
+   <span class="p">...:</span>     <span class="k">if</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">5</span><span class="p">:</span>
+   <span class="p">...:</span>         <span class="k">break</span>
+   <span class="p">...:</span> <span class="k">else</span><span class="p">:</span>
+   <span class="p">...:</span>     <span class="k">print</span><span class="p">(</span><span class="s">'Nice'</span><span class="p">)</span>
+   <span class="p">...:</span>
+<span class="n">Nice</span>
+</code></pre></div></div>
+
+<p>Getting to know none of these throw a syntax error = Mind blown ^_^</p>
+
+<p>Full blog and credits: <a href="https://towardsdatascience.com/hidden-gems-of-python-76020b14e42f">https://towardsdatascience.com/hidden-gems-of-python-76020b14e42f</a></p>
+
+<p>K.</p>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[wtf-ython]]></summary></entry><entry><title type="html">Google Authenticator on Phone + Laptop</title><link href="http://localhost:4000/ideas/2021/05/01/google-authenticator-on-phone-laptop.html" rel="alternate" type="text/html" title="Google Authenticator on Phone + Laptop" /><published>2021-05-01T00:00:00+05:30</published><updated>2021-05-01T00:00:00+05:30</updated><id>http://localhost:4000/ideas/2021/05/01/google-authenticator-on-phone-laptop</id><content type="html" xml:base="http://localhost:4000/ideas/2021/05/01/google-authenticator-on-phone-laptop.html"><![CDATA[<h1 id="google-authenticator-on-phone--laptop">Google Authenticator on Phone + Laptop</h1>
+
+<p>Fed up of digging around for your phone every time your VPN, AWS, Git, etc. asks for an MFA passcode?</p>
+
+<p>Let’s fix this.</p>
+
+<p>What you need -</p>
+
+<ol>
+  <li>You phone having the Google Authenticator setup</li>
+  <li>Google Chrome on the target laptop</li>
+</ol>
+
+<p>Replicate your Google Authenticator mobile accounts on your Laptop with these easy steps -</p>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*QPmujVbXUjzDXlR2.jpg" alt="Export accounts" /></p>
+
+<ol>
+  <li>Open Google Authenticator App on your phone. Select ‘Export accounts’</li>
+  <li>Share a screenshot of the QR code to your laptop, via email/whatsapp or whatever suits best.</li>
+  <li>Next download <a href="https://chrome.google.com/webstore/detail/authenticator/bhghoamapcdpbohphigoooaddinpkbai?hl=en">Authenticator Chrome App</a> on your target laptop</li>
+  <li>Make sure the QR code you sent from your phone in (2) is visible on your screen.</li>
+  <li>Open the app on chrome -&gt; Click on pencil icon -&gt; Click on + icon -&gt; Select ‘Scan QR Code’</li>
+  <li>Take a snippet of the QR code from (4)</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*4Cl5SlUCUrkgW3jUdtXRxQ.png" alt="Scan QR Code" /></p>
+
+<p>Viola, Authenticator accounts are replicated on your laptop. Enjoy the luxury of copy-pasting your passcodes from now on. Cheers.</p>
+
+<p>K.</p>]]></content><author><name></name></author><category term="ideas" /><summary type="html"><![CDATA[Google Authenticator on Phone + Laptop]]></summary></entry><entry><title type="html">A Basic Flask + HAProxy + MySQL integration</title><link href="http://localhost:4000/programming/2021/03/22/flask-haproxy-mysql-integration.html" rel="alternate" type="text/html" title="A Basic Flask + HAProxy + MySQL integration" /><published>2021-03-22T00:00:00+05:30</published><updated>2021-03-22T00:00:00+05:30</updated><id>http://localhost:4000/programming/2021/03/22/flask-haproxy-mysql-integration</id><content type="html" xml:base="http://localhost:4000/programming/2021/03/22/flask-haproxy-mysql-integration.html"><![CDATA[<p><img src="https://cdn-images-1.medium.com/max/800/0*u4KUBkRkX0BHVYEd.png" alt="Architecture Diagram" /></p>
 
 <p>Documenting how to spin up a quick PoC of integrating a Flask app with MySQL through HAProxy. Our flask app will run on a gunicorn server locally.</p>
 
@@ -171,7 +318,43 @@ gunicorn <span class="nt">-w</span> 1 <span class="nt">-k</span> gevent app:app 
 <div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">SHOW</span> <span class="n">PROCESSLIST</span><span class="p">;</span>
 </code></pre></div></div>
 
-<p>And MySQL will show you one connection made for the above curl.</p>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">Smart Cities | Pradeya — An Idea for the Grassroots</title><link href="http://localhost:4000/prototypes/2017/06/03/smart-cities-pradeya.html" rel="alternate" type="text/html" title="Smart Cities | Pradeya — An Idea for the Grassroots" /><published>2017-06-03T00:00:00+05:30</published><updated>2017-06-03T00:00:00+05:30</updated><id>http://localhost:4000/prototypes/2017/06/03/smart-cities-pradeya</id><content type="html" xml:base="http://localhost:4000/prototypes/2017/06/03/smart-cities-pradeya.html"><![CDATA[<h2 id="pradeya--platform-for-automated-distribution-of-unused-items">Pradeya — Platform for Automated Distribution of Unused Items</h2>
+<p>And MySQL will show you one connection made for the above curl.</p>]]></content><author><name></name></author><category term="programming" /><summary type="html"><![CDATA[]]></summary></entry><entry><title type="html">Problem-solving &amp;amp; Code interview in 45 mins</title><link href="http://localhost:4000/ideas/2019/09/18/problem-solving-code-interview-45-mins.html" rel="alternate" type="text/html" title="Problem-solving &amp;amp; Code interview in 45 mins" /><published>2019-09-18T00:00:00+05:30</published><updated>2019-09-18T00:00:00+05:30</updated><id>http://localhost:4000/ideas/2019/09/18/problem-solving-code-interview-45-mins</id><content type="html" xml:base="http://localhost:4000/ideas/2019/09/18/problem-solving-code-interview-45-mins.html"><![CDATA[<h1 id="taking-a-problem-solvingcoding-interview-in-45-mins">Taking a problem-solving/coding interview in 45 mins</h1>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/0*-y0MENvgy9qoj7yU.png" alt="Interview Process" /></p>
+
+<p>Notes on my experiments with effective coding/PS interview.</p>
+
+<ol>
+  <li>Start with a rough problem statement.</li>
+  <li>Did candidate ask questions to clarify and establish scope?</li>
+  <li>Ask which data structure to be used? What other options are there? Why this one?</li>
+  <li>Did candidate use single class or decompose to multiple? OOP-thinking?</li>
+  <li>Ask scenarios. Types and counts of each type?</li>
+  <li>Did candidate think TDD? Were cover corner cases covered?</li>
+  <li>Test approach to solution.</li>
+  <li>First principles thinking?</li>
+  <li>Did candidate get biased by scenarios thought of earlier?</li>
+  <li>Does candidate get confused by counter questioning?</li>
+  <li>How is the confidence on approach taken?</li>
+  <li>Receptive to hints and feedback?</li>
+  <li>Make candidate write code.</li>
+  <li>Correct syntax &amp; chosen language conventions followed acceptably.</li>
+</ol>
+
+<p><strong>Bonus</strong>:</p>
+
+<ol>
+  <li>Document code in Google docs. If offline, collect papers for later reference.</li>
+  <li>Open Google Timer setting it to 45 mins — check duration overflow.</li>
+  <li>Try to standardize evaluation metrics (depending on which round — coding, design, project, etc.) and keep them consistent across candidates.</li>
+  <li>Capture feedback as H/M/L rating and quick notes based on (2)</li>
+</ol>
+
+<p><img src="https://cdn-images-1.medium.com/max/800/1*P5xwSkuV0hcOrO_eW8qnlg.png" alt="Evaluation Metrics" /></p>
+
+<p>Remarkable how sometimes the most non-trivial problems need the simplest of solutions.</p>
+
+<p>K.</p>]]></content><author><name></name></author><category term="ideas" /><summary type="html"><![CDATA[Taking a problem-solving/coding interview in 45 mins]]></summary></entry><entry><title type="html">Smart Cities | Pradeya — An Idea for the Grassroots</title><link href="http://localhost:4000/prototypes/2017/06/03/smart-cities-pradeya.html" rel="alternate" type="text/html" title="Smart Cities | Pradeya — An Idea for the Grassroots" /><published>2017-06-03T00:00:00+05:30</published><updated>2017-06-03T00:00:00+05:30</updated><id>http://localhost:4000/prototypes/2017/06/03/smart-cities-pradeya</id><content type="html" xml:base="http://localhost:4000/prototypes/2017/06/03/smart-cities-pradeya.html"><![CDATA[<h2 id="pradeya--platform-for-automated-distribution-of-unused-items">Pradeya — Platform for Automated Distribution of Unused Items</h2>
 
 <p><img src="https://cdn-images-1.medium.com/max/800/0*JBbP9rBgVF7mel7Y.jpg" alt="Pradeya" /></p>
 
