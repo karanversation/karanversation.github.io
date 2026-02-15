@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Excel2XML - Experiments with VBA | karanversation</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+    <style>
+      :root {
+        --hn-orange: #ff6600;
+        --hn-bg: #f6f6ef;
+        --hn-text: #000000;
+        --hn-subtext: #828282;
+        --hn-link: #000000;
+        --hn-visited: #828282;
+      }
+      * { box-sizing: border-box; }
+      body {
+        margin: 0;
+        font-family: Verdana, Geneva, sans-serif;
+        background: #ffffff;
+        color: var(--hn-text);
+      }
+      a { color: var(--hn-link); text-decoration: none; }
+      a:visited { color: var(--hn-visited); }
+      a.recently-visited { color: var(--hn-visited); }
+      .page {
+        max-width: 960px;
+        margin: 8px auto;
+        background: var(--hn-bg);
+        border: 1px solid #e6e6df;
+      }
+      .topbar {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        background: var(--hn-orange);
+        font-size: clamp(11px, 1.2vw, 14px);
+      }
+      .logo {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 1.5em;
+        height: 1.5em;
+        border: 1px solid #ffffff;
+        color: #ffffff;
+        font-weight: bold;
+        font-size: 1em;
+        line-height: 1;
+        text-decoration: none;
+      }
+      .logo:visited { color: #ffffff; }
+      .brand {
+        font-weight: bold;
+        font-size: 1em;
+        color: #000000;
+      }
+      .brand:visited { color: #000000; }
+      .tagline {
+        font-size: 0.85em;
+        color: #000000;
+        opacity: 0.9;
+      }
+      .tagline a { color: #000000; }
+      .tagline a:visited { color: #000000; }
+      .content {
+        padding: 14px 12px 28px;
+      }
+      .post-title {
+        font-size: 20px;
+        margin: 0 0 6px;
+      }
+      .post-meta {
+        font-size: 11px;
+        color: var(--hn-subtext);
+        margin-bottom: 16px;
+      }
+      .post-body {
+        font-size: 13.5px;
+        line-height: 1.5;
+      }
+      .post-body h1,
+      .post-body h2,
+      .post-body h3 {
+        font-size: 16px;
+        margin: 20px 0 8px;
+      }
+      .post-body p { margin: 10px 0; }
+      .post-body ul,
+      .post-body ol { padding-left: 20px; }
+      .post-body li { margin: 4px 0; }
+      .post-body img {
+        max-width: 100%;
+        height: auto;
+      }
+      .post-body code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        background: #eeeeee;
+        padding: 1px 3px;
+      }
+      .post-body pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 14px;
+        overflow: auto;
+        border: 1px solid #1a1a1a;
+        border-radius: 4px;
+        margin: 16px 0;
+      }
+      .post-body pre code {
+        background: transparent;
+        color: #f8f8f2;
+        padding: 0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .post-body hr {
+        border: none;
+        border-top: 1px solid #e1e1da;
+        margin: 16px 0;
+      }
+      .back-link {
+        display: inline-block;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        margin-top: 18px;
+      }
+      .footer-nav {
+        border-top: 2px solid var(--hn-orange);
+        margin-top: 16px;
+        padding: 10px 0 12px;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        text-align: center;
+      }
+      .footer-nav a {
+        color: var(--hn-text);
+        margin: 0 6px;
+      }
+      .footer-nav a:visited { color: var(--hn-text); }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <div class="topbar">
+        <a class="logo" href="/">K</a>
+        <a class="brand" href="/">KaranVersation</a>
+        <div class="tagline">
+          <a href="/category/programming/">programming</a> |
+          <a href="/category/prototypes/">prototypes</a> |
+          <a href="/category/ideas/">ideas</a>
+        </div>
+      </div>
+      <div class="content">
+        <h1 class="post-title">Excel2XML - Experiments with VBA</h1>
+        <div class="post-meta">
+          January 01, 2012
+        </div>
+        <div class="post-body">
+          <p>Working with VBA for transferring data from Excel sheets onto XML files, was Part-1 of my project concerning generation of apps for mobile database implementation.</p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgXx9R1-Oc3SkpgW5MduMZHMHztvvRFQ3tNIKaoKOo98Cj34KjrDpow0S_EA-oswL-aEon8RwAMFX8S_Z-c5tM-GMQ5XEBWh_WZBZmooNwsHQgyAa3-6Guc6YiX_u94Ce_4L7I2_vFsfBhT/s1600/Untitled.png" alt="Excel2XML Main" /></p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj3B6QMESLJhspy4owiLt9aVA7_yNBF6yS9ndvpYLAC5OyL9LtpVQ4Ig_QEzbiDJiA6P0tTA2sKKuKefM2sMQ3ejDMnIexl1mRH8kL6awAd5IiUnj18SeWJtBN5bhWJn49iX0_nNfHJBlHL/s320/Capture.JPG" alt="Developer Tools" /></p>
+
+<p>For this purpose, I utilized the Developer tools of Microsoft Excel.</p>
+
+<p>To enable the developer tools, you can follows the steps mentioned <a href="http://office.microsoft.com/en-us/excel-help/show-the-developer-tab-or-run-in-developer-mode-HA010173052.aspx">here</a>.</p>
+
+<p>Once, the developer tab appears on your screen, you can begin with the coding work!</p>
+
+<p>My program code would work successfully with data in multiple TABs on the worksheet.</p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjIpfnBv66P0dZTOCgTzoB4__7AYEdCO3NIPa4KmgH36cb0nGC3hit636LT2aSQriRT0FGFgT260gjT1EU5K2PyA2Wtv4ZFCvXeLR2_todnjSPac-q1g4QufmPXoOrZhAVg7hbaNCFs5sFP/s1600/Capture.JPG" alt="Worksheet Tabs" /></p>
+
+<p>Now from the developer tab, you need to select the <strong>Command Button</strong>, under <strong>Insert</strong> option.</p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjlNOa_3bWmSxB2r5rfLnSXhIje70sIPUg4qk2bZkc42Cp91Zc9Ckq9yiqF-QV-jgfIQ-2-qpW5cUdOGUnfuNsGaJh1llG1n4tdFl35_3WA5mBRVqsjt4QEXvwkQMK51jgB9rxNviET3CGy/s1600/Capture.JPG" alt="Command Button" /></p>
+
+<p>Command Button is inserted. You can now change its properties as follows -</p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEht71K0jFndkl9rg1T4c3-5YNKcdp_QSeoA_UoYravv2ykPOHb7vBy6n6Yy28ZD4zdM3IZFB1lrL80-siuUC9Q6m8TSC3d9GFvvnHuqpFZmx5T2nMlnCGm4Me26Ttng8L6DDZHpZlh_K4Pd/s1600/Capture.JPG" alt="Button Properties" /></p>
+
+<p>Once the necessary changes are done, do ensure that the <strong>Design Mode</strong> button is selected, and then double click on the Button you earlier inserted to get into the VBA development area!</p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhvgYTS8qzmw6iuGxmUpHTRO85ALy7417_IlQu9FPle7nmwQylW3AsvL538G__ZRON8k-rl-9kLGhT2GYo1KmSkXILg8EN6MCG3klIwqXi8pQ-JYQqNU1s_loabTl1EezkJm537XcEB168W/s640/Capture.JPG" alt="VBA Development Area" /></p>
+
+<p>This is where my code comes into play.</p>
+
+<pre><code class="language-vba">Dim x As Integer
+For x = 1 To ThisWorkbook.Worksheets.Count
+    ThisWorkbook.Worksheets(x).Select
+    
+    Dim strXML As String
+    If Application.Count(Selection) = 0 Then
+        FindUsedRange
+    End If
+    
+    Set objXMLDoc = GenerateXMLDOM(Selection, "data")
+    
+    Dim path As String
+    path = ThisWorkbook.path &amp; "\" &amp; ActiveSheet.Name &amp; " (" &amp; ThisWorkbook.Name &amp; ")" &amp; ".xml"
+    
+    objXMLDoc.Save (path)
+    
+Next x
+    
+MsgBox ("Operation Complete!!!")
+</code></pre>
+
+<p>Paste this code inside the <strong>sub</strong> function of the command button.</p>
+
+<p>Now you need to IMPORT the .bas file of the script that I have created.</p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgAFZUKaKpFvFKJkBXpGNVOozeRG7umYuAIxVilvcvI-6twwPGfmntKaHM50i0IC4yfvGVl487OpBdJw7kUZz_B4WGvrpjg7UlJkZSodoa1Zq7Qseaj5G2wtncksKD61oXv63sQR2vAizQe/s1600/Capture.JPG" alt="Import BAS File" /></p>
+
+<p>This is where you need to MODIFY the code, according to the fields of your excel sheet and the required XML tags. For this you need to know basics of VBA coding.</p>
+
+<p>In my case, when the Import is done, and the code runs without error, on clicking the Command Button earlier inserted, the required XML files are generated and stored in the same directory and a confirmation message is shown -</p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiVgfxOcx1x-reQinIbAJy6w0IvFaHD5a0XfISVeI9JjHxSuLP3zWyExlfZ_nqzbke_bLqh7dn__nT8ttNdE1nzaEWIPoP-3o56OnhHpO1FbAj8zNXbP_z7HGhVQuNHTAU1CNQ-yw9kTSHY/s1600/Capture.JPG" alt="Operation Complete" /></p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgNZVRHr8uosCt_vLew7FMDE8h0lwmVUgBOTfUbl-mOyN9fO1LtAZXNj51ABvGOQgilK6OX2b9zjT5m5pXujgk2bV-JeCSTDhSQ7l7PcMDZD1hwS8JSAWgJCttVtefZVnyfRSljPU-zTu4q/s1600/Capture.JPG" alt="XML Files Generated" /></p>
+
+<p>You can download my .bas file from <a href="http://www.mediafire.com/?ip6xpkr8ept8ne8">here</a>.</p>
+
+<p>If you wish to view the complete SRS, you can download the pdf from <a href="http://www.mediafire.com/?2s7m8m5cw29boux">here</a>.</p>
+
+<p>Mission Successful! :)</p>
+
+<p><em>Original post: <a href="https://karanversation.blogspot.com/2012/01/excel2xml-experiments-with-vba.html">https://karanversation.blogspot.com/2012/01/excel2xml-experiments-with-vba.html</a></em></p>
+
+        </div>
+        <a class="back-link" href="/">← Back to posts</a>
+        <div class="footer-nav">
+          <a href="mailto:karanbajaj23@gmail.com">Contact</a> |
+          <a href="https://www.linkedin.com/in/k-bajaj/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        </div>
+      </div>
+    </div>
+    <script>
+      (function() {
+        const VISIT_DURATION = 15 * 60 * 1000; // 15 minutes in milliseconds
+        const STORAGE_KEY = 'karanversation_visits';
+        
+        // Get visited links from localStorage
+        function getVisitedLinks() {
+          try {
+            const data = localStorage.getItem(STORAGE_KEY);
+            return data ? JSON.parse(data) : {};
+          } catch (e) {
+            return {};
+          }
+        }
+        
+        // Save visited links to localStorage
+        function saveVisitedLinks(visits) {
+          try {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(visits));
+          } catch (e) {
+            // Ignore storage errors
+          }
+        }
+        
+        // Clean up old visits (older than 15 minutes)
+        function cleanupOldVisits(visits) {
+          const now = Date.now();
+          const cleaned = {};
+          for (const url in visits) {
+            if (now - visits[url] < VISIT_DURATION) {
+              cleaned[url] = visits[url];
+            }
+          }
+          return cleaned;
+        }
+        
+        // Mark links as recently visited
+        function markRecentVisits() {
+          const visits = cleanupOldVisits(getVisitedLinks());
+          const now = Date.now();
+          
+          document.querySelectorAll('.title a, .back-link').forEach(function(link) {
+            const url = link.href;
+            if (visits[url] && (now - visits[url] < VISIT_DURATION)) {
+              link.classList.add('recently-visited');
+              // Set timeout to remove class after remaining time
+              const remaining = VISIT_DURATION - (now - visits[url]);
+              setTimeout(function() {
+                link.classList.remove('recently-visited');
+              }, remaining);
+            }
+          });
+          
+          saveVisitedLinks(visits);
+        }
+        
+        // Track link clicks
+        function trackLinkClick(url) {
+          const visits = getVisitedLinks();
+          visits[url] = Date.now();
+          saveVisitedLinks(visits);
+        }
+        
+        // Initialize on page load
+        markRecentVisits();
+        
+        // Track clicks on post links
+        document.querySelectorAll('.title a, .back-link').forEach(function(link) {
+          link.addEventListener('click', function() {
+            trackLinkClick(this.href);
+          });
+        });
+      })();
+    </script>
+  </body>
+</html>

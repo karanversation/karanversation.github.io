@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Home | karanversation</title>
+    <title>TradeCops - A Generic tool for Parameter based Visualization | karanversation</title>
     <link rel="icon" href="/favicon.svg" type="image/svg+xml">
     <style>
       :root {
@@ -68,35 +68,65 @@
       .content {
         padding: 14px 12px 28px;
       }
-      .post-list {
-        list-style: none;
-        margin: 0;
-        padding: 0;
+      .post-title {
+        font-size: 20px;
+        margin: 0 0 6px;
       }
-      .post-item {
-        display: grid;
-        grid-template-columns: 28px 1fr;
-        gap: 10px;
-        align-items: baseline;
-        padding: 6px 0;
-      }
-      .rank {
-        color: var(--hn-subtext);
-        font-size: 12px;
-        text-align: right;
-      }
-      .title {
-        font-size: 14px;
-      }
-      .subtext {
-        font-size: 10.5px;
-        color: var(--hn-subtext);
-        margin-top: 2px;
-      }
-      .footer {
-        padding-top: 12px;
+      .post-meta {
         font-size: 11px;
         color: var(--hn-subtext);
+        margin-bottom: 16px;
+      }
+      .post-body {
+        font-size: 13.5px;
+        line-height: 1.5;
+      }
+      .post-body h1,
+      .post-body h2,
+      .post-body h3 {
+        font-size: 16px;
+        margin: 20px 0 8px;
+      }
+      .post-body p { margin: 10px 0; }
+      .post-body ul,
+      .post-body ol { padding-left: 20px; }
+      .post-body li { margin: 4px 0; }
+      .post-body img {
+        max-width: 100%;
+        height: auto;
+      }
+      .post-body code {
+        font-family: "Courier New", Courier, monospace;
+        font-size: 12px;
+        background: #eeeeee;
+        padding: 1px 3px;
+      }
+      .post-body pre {
+        background: #2d2d2d;
+        color: #f8f8f2;
+        padding: 14px;
+        overflow: auto;
+        border: 1px solid #1a1a1a;
+        border-radius: 4px;
+        margin: 16px 0;
+      }
+      .post-body pre code {
+        background: transparent;
+        color: #f8f8f2;
+        padding: 0;
+        font-size: 13px;
+        line-height: 1.5;
+      }
+      .post-body hr {
+        border: none;
+        border-top: 1px solid #e1e1da;
+        margin: 16px 0;
+      }
+      .back-link {
+        display: inline-block;
+        font-size: 11px;
+        color: var(--hn-subtext);
+        margin-top: 18px;
       }
       .footer-nav {
         border-top: 2px solid var(--hn-orange);
@@ -117,7 +147,7 @@
     <div class="page">
       <div class="topbar">
         <a class="logo" href="/">K</a>
-        <div class="brand">KaranVersation</div>
+        <a class="brand" href="/">KaranVersation</a>
         <div class="tagline">
           <a href="/category/programming/">programming</a> |
           <a href="/category/prototypes/">prototypes</a> |
@@ -125,106 +155,56 @@
         </div>
       </div>
       <div class="content">
-        <ol class="post-list">
-          
-            <li class="post-item">
-              <span class="rank">1.</span>
-              <div>
-                <div class="title">
-                  <a href="/programming/2023/01/18/hybrid-mysql-data-model-horizontal-sharding-global-data-platform.html">A hybrid MySQL data model with Horizontal Sharding and a Global data platform</a>
-                </div>
-                <div class="subtext">
-                  January 18, 2023
-                </div>
-              </div>
-            </li>
-          
-            <li class="post-item">
-              <span class="rank">2.</span>
-              <div>
-                <div class="title">
-                  <a href="/programming/2021/10/14/wtf-ython.html">wtf-ython</a>
-                </div>
-                <div class="subtext">
-                  October 14, 2021
-                </div>
-              </div>
-            </li>
-          
-            <li class="post-item">
-              <span class="rank">3.</span>
-              <div>
-                <div class="title">
-                  <a href="/ideas/2021/05/01/google-authenticator-on-phone-laptop.html">Google Authenticator on Phone + Laptop</a>
-                </div>
-                <div class="subtext">
-                  May 01, 2021
-                </div>
-              </div>
-            </li>
-          
-            <li class="post-item">
-              <span class="rank">4.</span>
-              <div>
-                <div class="title">
-                  <a href="/programming/2021/03/22/flask-haproxy-mysql-integration.html">A Basic Flask + HAProxy + MySQL integration</a>
-                </div>
-                <div class="subtext">
-                  March 22, 2021
-                </div>
-              </div>
-            </li>
-          
-            <li class="post-item">
-              <span class="rank">5.</span>
-              <div>
-                <div class="title">
-                  <a href="/ideas/2019/09/18/problem-solving-code-interview-45-mins.html">Problem-solving & Code interview in 45 mins</a>
-                </div>
-                <div class="subtext">
-                  September 18, 2019
-                </div>
-              </div>
-            </li>
-          
-            <li class="post-item">
-              <span class="rank">6.</span>
-              <div>
-                <div class="title">
-                  <a href="/prototypes/2017/06/03/smart-cities-pradeya.html">Smart Cities | Pradeya — An Idea for the Grassroots</a>
-                </div>
-                <div class="subtext">
-                  June 03, 2017
-                </div>
-              </div>
-            </li>
-          
-            <li class="post-item">
-              <span class="rank">7.</span>
-              <div>
-                <div class="title">
-                  <a href="/prototypes/2014/01/29/tradecops.html">TradeCops - A Generic tool for Parameter based Visualization</a>
-                </div>
-                <div class="subtext">
-                  January 29, 2014
-                </div>
-              </div>
-            </li>
-          
-            <li class="post-item">
-              <span class="rank">8.</span>
-              <div>
-                <div class="title">
-                  <a href="/programming/2012/01/01/excel2xml-experiments-with-vba.html">Excel2XML - Experiments with VBA</a>
-                </div>
-                <div class="subtext">
-                  January 01, 2012
-                </div>
-              </div>
-            </li>
-          
-        </ol>
-        <div class="footer">More posts coming soon.</div>
+        <h1 class="post-title">TradeCops - A Generic tool for Parameter based Visualization</h1>
+        <div class="post-meta">
+          January 29, 2014
+        </div>
+        <div class="post-body">
+          <p>Data is important to all of us.</p>
+
+<p>But what’s more important is the WAY we see it.</p>
+
+<p>TradeCops was built for a specific business use case, but the design and code are highly generic - which means all it needs to port it onto a totally unrelated business case is a few changes in the configuration files.</p>
+
+<p>Well, this is how enterprise systems work.</p>
+
+<p>Our business case was for <strong>Trade Compliance and Risk Governance</strong>. Compliance monitor trading activity of their clients through a monitoring system. Once in a while, the system shows anomalous trading behaviour. The judgement is based on automated algorithms fed to the monitoring engine.</p>
+
+<p>The question for Compliance now, is whether this really is an abnormal activity? It might be -</p>
+
+<ul>
+  <li>a perfectly sensible move (in case Apple fires it’s CEO, the stock is bound so tank. So if client is selling the stocks madly, it’s stupid to blame him for abnormal trades),</li>
+  <li>or something fishy (the market sentiment is neutral, but the client is selling like millions of stocks!</li>
+</ul>
+
+<p>The way to do this is to manually check out information online and through firm proprietary systems. And once you have the intel from a dozen different sources, use your head to come up with a sensible boolean decision.</p>
+
+<p>Too bad.</p>
+
+<p>TradeCops asks Compliance to ‘plug in’ their data sources, select what they want to visualize, how, and for what (we’ll give you can example soon), and viola - a compelling visualization in seconds.</p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjcP40TjyJpPRB6ds-AlsR7RvUCVdLn3xGfQMkrMiuWtVOiCPtQ2oN0KDLzejN5nddcS833f0oLemnhffVpv3a327NppNPvu4MR9BWpjQkjLVgSr_dmchlx3nUWo5Al3QGfKRV-smew9mj2/s1600/TradeCops_2.jpg" alt="TradeCops Visualization" /></p>
+
+<p>Yeah. This is what I was talking about.</p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgAZcZUwZU_Ad9IQAfQ0lNi_lSky7YZjjg4NrtiVJrRHK9Ga1W70kHs9P9gpt_sG-3ePFrKLoUCgeQmRrurWK_HtJgCEjaUXaRK0GBle8EiEQppdrKiEKy9ZL6TOX3b2Eyx_TcOsWzW9opq/s1600/Tradecops.jpg" alt="TradeCops Chart" /></p>
+
+<p>And the specifications for this chart.</p>
+
+<p>Or else advanced features like ‘Saved template loading’ (which I’ll illustrate later)</p>
+
+<p>Now you are free to provide specifications according to your requirement, and we can visualize almost anything*</p>
+
+<p>*Information processed and visualized by us is in tabular format (Database table, CSV files, etc)</p>
+
+<p>Another snapshot of Tradecops flaunting it’s UI.</p>
+
+<p><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEix7_2BAO0w2Hw0GuJrEKb5LAz_k5kSkajrxJn8T4BRFCTRLJkwxxNkxwSp5j31n8LsaHi5QHrzhyw3goxAXrAnA_7ez_NcfYWRZioAsqsBoJmdht6eOCSqeYDh_OzCKQl42bnuBxLgL-3C/s1600/Tradecops.jpg" alt="TradeCops UI" /></p>
+
+<p>My next blog talks about the art behind the scenes. In simpler words - the underlying architecture, technologies involved, introduction to a design pattern implemented and lastly, the sexy UI code structure.</p>
+
+        </div>
+        <a class="back-link" href="/">← Back to posts</a>
         <div class="footer-nav">
           <a href="mailto:karanbajaj23@gmail.com">Contact</a> |
           <a href="https://www.linkedin.com/in/k-bajaj/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
