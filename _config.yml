@@ -9,4 +9,3 @@ markdown: kramdown
 
 plugins:
   - jekyll-feed
-

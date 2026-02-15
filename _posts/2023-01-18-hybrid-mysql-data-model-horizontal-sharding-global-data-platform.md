@@ -5,8 +5,6 @@ categories: [programming]
 date: 2023-01-18
 ---
 
-# A hybrid MySQL data model with Horizontal Sharding and a Global data platform
-
 ![MySQL Hosting Platform](https://cdn-images-1.medium.com/max/800/0*L7YtvCgGaabAJnZL.png)
 
 *Image src: [https://geekflare.com/mysql-hosting-platform/](https://geekflare.com/mysql-hosting-platform/)*

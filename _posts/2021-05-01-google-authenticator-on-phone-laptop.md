@@ -5,8 +5,6 @@ categories: [ideas]
 date: 2021-05-01
 ---
 
-# Google Authenticator on Phone + Laptop
-
 Fed up of digging around for your phone every time your VPN, AWS, Git, etc. asks for an MFA passcode?
 
 Let's fix this.
